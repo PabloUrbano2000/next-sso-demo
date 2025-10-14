@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-import { piano } from '@/constants/piano'
+import { getPianoAttrs } from '@/constants/piano'
 
 interface ErrorResponse {
   piano_status: number
@@ -30,7 +30,9 @@ interface ServiceResult<T, E> {
 export const socialAccountDetails = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
-  const endpoint = `${piano.fullApiVersion.v1}/publisher/social/account-details`
+  const endpoint = `${
+    getPianoAttrs().fullApiVersion.v1
+  }/publisher/social/account-details`
   try {
     const response = await axios.get<SuccessResponse>(endpoint, {
       headers: {

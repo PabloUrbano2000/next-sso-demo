@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-import { piano } from '@/constants/piano'
+import { getPianoAttrs } from '@/constants/piano'
 
 interface SuccessResponse {
   code: number
@@ -34,7 +34,7 @@ interface ServiceResult<T, E> {
 export const anonUserGet = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
-  const endpoint = `${piano.fullApiVersion.v3}/anon/user/get`
+  const endpoint = `${getPianoAttrs().fullApiVersion.v3}/anon/user/get`
   try {
     const response = await axios.post<SuccessResponse>(
       endpoint,

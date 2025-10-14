@@ -1,7 +1,9 @@
 import { Brands, BRANDS } from '@/constants/brands'
-import { piano } from '@/constants/piano'
+import { getPianoAttrs } from '@/constants/piano'
 
 export function getPianoInfo(brand: string | null) {
+  const piano = getPianoAttrs()
+
   if (brand && brand in BRANDS) {
     return {
       aid: piano.core[brand as Brands].aid,

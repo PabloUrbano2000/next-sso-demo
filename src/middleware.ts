@@ -4,8 +4,6 @@ import { ExtendedNextRequest } from '@/types/next'
 import { handleApi } from './lib/middlewares/api'
 import { handleAuth } from './lib/middlewares/auth'
 
-
-
 export function middleware(req: ExtendedNextRequest) {
   const path = req.nextUrl.pathname
 

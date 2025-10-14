@@ -25,31 +25,34 @@ interface PIANO {
   }
 }
 
-export const piano: PIANO = {
-  core: {
-    elcomercio: {
-      aid: getEnv().ELCOMERCIO_AID,
-      apiToken: getEnv().ELCOMERCIO_API_TOKEN
+export const getPianoAttrs = (): PIANO => {
+  const envs = getEnv()
+  return {
+    core: {
+      elcomercio: {
+        aid: envs.ELCOMERCIO_AID,
+        apiToken: envs.ELCOMERCIO_API_TOKEN
+      },
+      gestion: {
+        aid: envs.GESTION_AID,
+        apiToken: envs.GESTION_API_TOKEN
+      },
+      clubelcomercio: {
+        aid: envs.CLUBELCOMERCIO_AID,
+        apiToken: envs.CLUBELCOMERCIO_API_TOKEN
+      }
     },
-    gestion: {
-      aid: getEnv().GESTION_AID,
-      apiToken: getEnv().GESTION_API_TOKEN
+    apiVersion: {
+      v1: '/id/api/v1',
+      v3: '/api/v3'
     },
-    clubelcomercio: {
-      aid: getEnv().CLUBELCOMERCIO_AID,
-      apiToken: getEnv().CLUBELCOMERCIO_API_TOKEN
+    fullApiVersion: {
+      v1: `${envs.PIANO_API}/id/api/v1`,
+      v3: `${envs.PIANO_API}/api/v3`
+    },
+    report: {
+      api: '/rest',
+      fullApi: `${envs.PIANO_REPORT_API}/rest`
     }
-  },
-  apiVersion: {
-    v1: '/id/api/v1',
-    v3: '/api/v3'
-  },
-  fullApiVersion: {
-    v1: `${getEnv().PIANO_API}/id/api/v1`,
-    v3: `${getEnv().PIANO_API}/api/v3`
-  },
-  report: {
-    api: '/rest',
-    fullApi: `${getEnv().PIANO_REPORT_API}/rest`
   }
 }
