@@ -1,0 +1,20 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Iniciando preBuild"
+        - npm ci
+        # Carga manual de variables desde un archivo .env si existe
+        - if [ -f .env ]; then export $(cat .env | xargs); fi
+    build:
+      commands:
+        - echo "Iniciando build de Next.js con Amplify"
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
