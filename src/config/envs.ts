@@ -16,11 +16,6 @@ export interface AppEnv {
 }
 
 export function getEnv(): AppEnv {
-
-  console.log('NODE_ENV:', process.env.NODE_ENV)
-  console.log('PIANO API', process.env.PIANO_API)
-  console.log('ALLOWED_DOMAINS', process.env.ALLOWED_DOMAINS)
-
   return {
     NODE_ENV: get('NODE_ENV').default('development').asString(),
     ALLOWED_DOMAINS: get('ALLOWED_DOMAINS').default('').asArray(),
