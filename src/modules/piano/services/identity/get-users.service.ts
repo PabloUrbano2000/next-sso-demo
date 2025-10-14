@@ -31,9 +31,9 @@ interface ServiceResult<T, E> {
   error?: E
 }
 
-export const getUsers = async (
+export async function getUsers(
   data: Props
-): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
+): Promise<ServiceResult<SuccessResponse, ErrorResponse>> {
   console.log('llegó a get-users service')
 
   const piano = getPianoAttrs()
