@@ -9,6 +9,7 @@ const corsOptions = {
 }
 
 export function handleApi(req: NextRequest) {
+  console.log('llegó aqui', req.url)
   const origin = req.headers.get('origin') ?? ''
   const allowedOrigins = getEnv().ALLOWED_DOMAINS
   const isAllowedOrigin = allowedOrigins.includes(origin)
