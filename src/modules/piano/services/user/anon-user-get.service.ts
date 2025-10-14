@@ -34,7 +34,9 @@ interface ServiceResult<T, E> {
 export const anonUserGet = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
-  const endpoint = `${getPianoAttrs().fullApiVersion.v3}/anon/user/get`
+  const piano = getPianoAttrs()
+
+  const endpoint = `${piano.fullApiVersion.v3}/anon/user/get`
   try {
     const response = await axios.post<SuccessResponse>(
       endpoint,

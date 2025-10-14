@@ -30,9 +30,9 @@ interface ServiceResult<T, E> {
 export const socialAccountDetails = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
-  const endpoint = `${
-    getPianoAttrs().fullApiVersion.v1
-  }/publisher/social/account-details`
+  const piano = getPianoAttrs()
+
+  const endpoint = `${piano.fullApiVersion.v1}/publisher/social/account-details`
   try {
     const response = await axios.get<SuccessResponse>(endpoint, {
       headers: {

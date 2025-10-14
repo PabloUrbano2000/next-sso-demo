@@ -31,9 +31,9 @@ interface ServiceResult<T, E> {
 export const login = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
-  const endpoint = `${
-    getPianoAttrs().fullApiVersion.v1
-  }/publisher/identity/login`
+  const piano = getPianoAttrs()
+
+  const endpoint = `${piano.fullApiVersion.v1}/publisher/identity/login`
   try {
     const response = await axios.post<SuccessResponse>(
       endpoint,

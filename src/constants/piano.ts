@@ -25,7 +25,7 @@ interface PIANO {
   }
 }
 
-export const getPianoAttrs = (): PIANO => {
+export function getPianoAttrs(): PIANO {
   const envs = getEnv()
   return {
     core: {
