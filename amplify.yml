@@ -3,13 +3,20 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Iniciando preBuild"
         - npm ci
-        # Carga manual de variables desde un archivo .env si existe
-        - if [ -f .env ]; then export $(cat .env | xargs); fi
     build:
       commands:
-        - echo "Iniciando build de Next.js con Amplify"
+        - env | grep -e ALLOWED_DOMAINS >> .env.production
+        - env | grep -e PIANO_API >> .env.production
+        - env | grep -e ELCOMERCIO_AID >> .env.production
+        - env | grep -e GESTION_AID >> .env.production
+        - env | grep -e CLUBELCOMERCIO_AID >> .env.production
+        - env | grep -e ELCOMERCIO_API_TOKEN >> .env.production
+        - env | grep -e GESTION_API_TOKEN >> .env.production
+        - env | grep -e CLUBELCOMERCIO_API_TOKEN >> .env.production
+        - env | grep -e JWT_SECRET >> .env.production
+        - env | grep -e SENTRY_DNS >> .env.production
+
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -18,3 +25,4 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - .next/cache/**/*
