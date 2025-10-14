@@ -1,8 +1,8 @@
-import { envs } from '@/config/envs'
+import { getEnv() } from '@/config/getEnv()'
 import { Brand, BRANDS } from '@/constants/brands'
 import { NextRequest, NextResponse } from 'next/server'
 
-const allowedOrigins = envs.ALLOWED_DOMAINS
+const allowedOrigins = getEnv().ALLOWED_DOMAINS
 
 const corsOptions = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

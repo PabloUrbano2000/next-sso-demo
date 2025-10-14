@@ -1,4 +1,4 @@
-import { envs } from '@/config/envs'
+import { getEnv() } from '@/config/getEnv()'
 
 interface Keys {
   aid: string
@@ -28,16 +28,16 @@ interface PIANO {
 export const piano: PIANO = {
   core: {
     elcomercio: {
-      aid: envs.ELCOMERCIO_AID,
-      apiToken: envs.ELCOMERCIO_API_TOKEN
+      aid: getEnv().ELCOMERCIO_AID,
+      apiToken: getEnv().ELCOMERCIO_API_TOKEN
     },
     gestion: {
-      aid: envs.GESTION_AID,
-      apiToken: envs.GESTION_API_TOKEN
+      aid: getEnv().GESTION_AID,
+      apiToken: getEnv().GESTION_API_TOKEN
     },
     clubelcomercio: {
-      aid: envs.CLUBELCOMERCIO_AID,
-      apiToken: envs.CLUBELCOMERCIO_API_TOKEN
+      aid: getEnv().CLUBELCOMERCIO_AID,
+      apiToken: getEnv().CLUBELCOMERCIO_API_TOKEN
     }
   },
   apiVersion: {
@@ -45,11 +45,11 @@ export const piano: PIANO = {
     v3: '/api/v3'
   },
   fullApiVersion: {
-    v1: `${envs.PIANO_API}/id/api/v1`,
-    v3: `${envs.PIANO_API}/api/v3`
+    v1: `${getEnv().PIANO_API}/id/api/v1`,
+    v3: `${getEnv().PIANO_API}/api/v3`
   },
   report: {
     api: '/rest',
-    fullApi: `${envs.PIANO_REPORT_API}/rest`
+    fullApi: `${getEnv().PIANO_REPORT_API}/rest`
   }
 }
