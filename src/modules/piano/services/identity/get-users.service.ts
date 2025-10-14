@@ -34,6 +34,7 @@ interface ServiceResult<T, E> {
 export const getUsers = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
+  console.log('llegó a get-users service')
   const endpoint = `${getPianoAttrs().fullApiVersion.v1}/publisher/users/get`
   try {
     const response = await axios.post<SuccessResponse>(endpoint, null, {

@@ -8,6 +8,9 @@ import { anonUserGet } from '@/modules/piano/services/user/anon-user-get.service
 import { handleCustomError, handleUnexpectedError } from '@/utils/handle-errors'
 import { logToSentry } from '@/utils/sentry-logger'
 
+export const runtime = 'nodejs';        // ✅ Node Lambda, no Edge
+export const dynamic = 'force-dynamic'; // ✅ evita SSG/Edge
+
 export async function POST(req: NextRequest) {
   console.log('leggó al LOGIN')
   const brand = req.headers.get('x-brand')

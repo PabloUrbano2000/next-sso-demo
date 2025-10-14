@@ -6,6 +6,9 @@ import { handleUnexpectedError } from '@/utils/handle-errors'
 import { logToSentry } from '@/utils/sentry-logger'
 import { cookies } from 'next/headers'
 
+export const runtime = 'nodejs' // ✅ Node Lambda, no Edge
+export const dynamic = 'force-dynamic' // ✅ evita SSG/Edge
+
 export async function POST(req: NextRequest) {
   const brand = req.headers.get('x-brand')
 
