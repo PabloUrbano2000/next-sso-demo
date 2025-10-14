@@ -7,8 +7,8 @@ import { socialAccountDetails } from '@/modules/piano/services/social/get-social
 import { handleUnexpectedError } from '@/utils/handle-errors'
 import { logToSentry } from '@/utils/sentry-logger'
 
-export const runtime = 'nodejs';        // ✅ Node Lambda, no Edge
-export const dynamic = 'force-dynamic'; // ✅ evita SSG/Edge
+export const runtime = 'nodejs' // ✅ Node Lambda, no Edge
+export const dynamic = 'force-dynamic' // ✅ evita SSG/Edge
 
 export async function POST(req: NextRequest) {
   console.log('llegó al post')
