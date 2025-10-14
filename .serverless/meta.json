@@ -1,0 +1,112 @@
+{
+  "C:\\proyectos\\sso-demo\\sso-demo\\serverless.yml": {
+    "versionFramework": "4.21.0",
+    "servicePath": "C:\\proyectos\\sso-demo\\sso-demo\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "next-sso-demo",
+      "component": "@sls-next/serverless-component@latest",
+      "inputs": {
+        "bucketName": "next-sso-assets-${stage}",
+        "region": "us-east-1",
+        "memory": 1024,
+        "timeout": 15,
+        "cloudfront": {
+          "defaults": {
+            "ttl": 0,
+            "forward": {
+              "cookies": "all",
+              "headers": [
+                "Authorization"
+              ]
+            }
+          }
+        },
+        "env": {
+          "STAGE": "${stage}",
+          "NODE_ENV": "production",
+          "JWT_SECRET": "<REDACTED>",
+          "PIANO_API": "https://api.piano.io",
+          "PIANO_REPORT_API": "https://reports-api.piano.io",
+          "ALLOWED_DOMAINS": "https://elcomercio.pe",
+          "ELCOMERCIO_AID": "Enoqbpnkpu",
+          "GESTION_AID": "UmAkgzZ4pu",
+          "CLUBELCOMERCIO_AID": "fiiSp96Gpu",
+          "ELCOMERCIO_API_TOKEN": "<REDACTED>",
+          "GESTION_API_TOKEN": "<REDACTED>",
+          "CLUBELCOMERCIO_API_TOKEN": "<REDACTED>",
+          "SENTRY_DNS": "https://5f89e34be9c14841a3dea359c77c1376@sentry.ec.pe/143"
+        }
+      },
+      "provider": {
+        "name": "aws",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {},
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-973ff8b7-8286",
+              "Export": {
+                "Name": "sls-next-sso-demo-dev-ServerlessDeploymentBucketName"
+              }
+            }
+          }
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {},
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-973ff8b7-8286",
+            "Export": {
+              "Name": "sls-next-sso-demo-dev-ServerlessDeploymentBucketName"
+            }
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "The CloudFormation template is invalid: Template format error: At least one Resources member must be defined.",
+      "stack": "ServerlessError2: The CloudFormation template is invalid: Template format error: At least one Resources member must be defined.\n    at file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1059:21617\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async aws:deploy:deploy:validateTemplate (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1070:7597)\n    at async PluginManager.runHooks (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:9865)\n    at async PluginManager.invoke (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:10634)\n    at async PluginManager.spawn (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:10993)\n    at async PluginManager.runHooks (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:9865)\n    at async PluginManager.invoke (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:10634)\n    at async PluginManager.run (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1304:11364)\n    at async Serverless.run (file:///C:/Users/pablo/.serverless/releases/4.21.0/package/dist/sf-core.js:1311:10523)",
+      "code": "INVALID_AWS_CLOUDFORMATION_TEMPLATE"
+    },
+    "serviceRawFile": "service: next-sso-demo\r\ncomponent: '@sls-next/serverless-component@latest'\r\n\r\ninputs:\r\n  bucketName: next-sso-assets-${stage}\r\n  region: us-east-1\r\n  memory: 1024\r\n  timeout: 15\r\n  cloudfront:\r\n    defaults:\r\n      ttl: 0\r\n      forward:\r\n        cookies: all\r\n        headers:\r\n          - Authorization\r\n  env:\r\n    STAGE: ${stage}\r\n    NODE_ENV: ${env:NODE_ENV, \"dev\"}\r\n    JWT_SECRET: ${env:JWT_SECRET}\r\n    PIANO_API: ${env:PIANO_API}\r\n    PIANO_REPORT_API: ${env:PIANO_REPORT_API}\r\n    ALLOWED_DOMAINS: ${env:ALLOWED_DOMAINS}\r\n    ELCOMERCIO_AID: ${env:ELCOMERCIO_AID}\r\n    GESTION_AID: ${env:GESTION_AID}\r\n    CLUBELCOMERCIO_AID: ${env:CLUBELCOMERCIO_AID}\r\n    ELCOMERCIO_API_TOKEN: ${env:ELCOMERCIO_API_TOKEN}\r\n    GESTION_API_TOKEN: ${env:GESTION_API_TOKEN}\r\n    CLUBELCOMERCIO_API_TOKEN: ${env:CLUBELCOMERCIO_API_TOKEN}\r\n    SENTRY_DNS: ${env:SENTRY_DNS}\r\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "stage": "dev"
+    },
+    "orgId": "830a0b13-61f9-48d1-b9f7-8cba8ca75efa",
+    "orgName": "losmaldysdevs2000",
+    "userId": "XBmvvKKxsCWgrygK2y",
+    "userName": "losmaldysdevs2000",
+    "serviceProviderAwsAccountId": "163589290901",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

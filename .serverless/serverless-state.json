@@ -1,0 +1,77 @@
+{
+  "service": {
+    "service": "next-sso-demo",
+    "serviceObject": {
+      "name": "next-sso-demo"
+    },
+    "provider": {
+      "name": "aws",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {},
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-973ff8b7-8286",
+            "Export": {
+              "Name": "sls-next-sso-demo-dev-ServerlessDeploymentBucketName"
+            }
+          }
+        }
+      }
+    },
+    "pluginsData": {},
+    "functions": {},
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless",
+    "initialServerlessConfig": {
+      "service": "next-sso-demo",
+      "component": "@sls-next/serverless-component@latest",
+      "inputs": {
+        "bucketName": "next-sso-assets-${stage}",
+        "region": "us-east-1",
+        "memory": 1024,
+        "timeout": 15,
+        "cloudfront": {
+          "defaults": {
+            "ttl": 0,
+            "forward": {
+              "cookies": "all",
+              "headers": [
+                "Authorization"
+              ]
+            }
+          }
+        },
+        "env": {
+          "STAGE": "${stage}",
+          "NODE_ENV": "production",
+          "JWT_SECRET": "pablitoestuvoaqui",
+          "PIANO_API": "https://api.piano.io",
+          "PIANO_REPORT_API": "https://reports-api.piano.io",
+          "ALLOWED_DOMAINS": "https://elcomercio.pe",
+          "ELCOMERCIO_AID": "Enoqbpnkpu",
+          "GESTION_AID": "UmAkgzZ4pu",
+          "CLUBELCOMERCIO_AID": "fiiSp96Gpu",
+          "ELCOMERCIO_API_TOKEN": "pmKfyyPL5R59wAoNV0uR92Cp1y7bXnQMl1H4YGLN",
+          "GESTION_API_TOKEN": "zu1KjQ6Y2MeGn5rHWWl9Rt6cRF2XAzzI7XqMTeEd",
+          "CLUBELCOMERCIO_API_TOKEN": "tk1xtKp2yO5EsJYuUCZXdJTGLIqKRtJBcmLiD4U4",
+          "SENTRY_DNS": "https://5f89e34be9c14841a3dea359c77c1376@sentry.ec.pe/143"
+        }
+      },
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      }
+    },
+    "appId": null,
+    "orgId": null,
+    "layers": {}
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/next-sso-demo/dev/1760377277814-2025-10-13T17:41:17.814Z",
+    "artifact": ""
+  }
+}
