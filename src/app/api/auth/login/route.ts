@@ -8,6 +8,9 @@ import { anonUserGet } from '@/modules/piano/services/user/anon-user-get.service
 import { handleCustomError, handleUnexpectedError } from '@/utils/handle-errors'
 import { logToSentry } from '@/utils/sentry-logger'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   const brand = req.headers.get('x-brand')
 
