@@ -34,8 +34,6 @@ interface ServiceResult<T, E> {
 export async function getUsers(
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> {
-  console.log('llegó a get-users service')
-
   const piano = getPianoAttrs()
 
   const endpoint = `${piano.fullApiVersion.v1}/publisher/users/get`

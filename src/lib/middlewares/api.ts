@@ -1,3 +1,4 @@
+import { getEnv } from '@/config/envs'
 import { Brand, BRANDS } from '@/constants/brands'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -8,11 +9,9 @@ const corsOptions = {
 }
 
 export function handleApi(req: NextRequest) {
-  console.log('llegó aqui', req.url)
   const origin = req.headers.get('origin') ?? ''
-  // TODO: revisar
-  // const envs = getEnv()
-  const allowedOrigins: string[] = [] // envs.ALLOWED_DOMAINS|| []
+  const envs = getEnv()
+  const allowedOrigins: string[] = envs.ALLOWED_DOMAINS
   const isAllowedOrigin = allowedOrigins.includes(origin)
 
   const isPreflight = req.method === 'OPTIONS'
