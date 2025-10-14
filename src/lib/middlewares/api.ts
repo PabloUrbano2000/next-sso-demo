@@ -1,4 +1,4 @@
-import { getEnv() } from '@/config/getEnv()'
+import { getEnv } from '@/config/envs'
 import { Brand, BRANDS } from '@/constants/brands'
 import { NextRequest, NextResponse } from 'next/server'
 

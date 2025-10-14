@@ -1,4 +1,4 @@
-import { getEnv() } from '@/config/getEnv()'
+import { getEnv } from '@/config/envs'
 
 interface Keys {
   aid: string
