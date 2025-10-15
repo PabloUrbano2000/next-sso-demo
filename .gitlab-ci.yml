@@ -1,4 +1,4 @@
-image: node:22
+image: node:20-bullseye
 
 stages:
   - build
@@ -37,7 +37,7 @@ deploy:
   stage: deploy
   image:
     name: amazon/aws-cli
-    entrypoint: [""]
+    entrypoint: ['']
   script:
     # Actualizamos variables de entorno en Amplify
     - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,$JWT_SECRET=JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
