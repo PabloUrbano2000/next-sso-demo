@@ -61,9 +61,5 @@ deploy:
     
     # Lanzamos el deployment
     - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build.zip?job_token=$CI_JOB_TOKEN"
-    - aws amplify start-deployment \
-        --app-id $APP_ID \
-        --branch-name $BRANCH_NAME \
-        --source-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build.zip?job_token=$CI_JOB_TOKEN"
   only:
     - main
