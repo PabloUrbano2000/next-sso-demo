@@ -1,55 +1,3 @@
-# image: node:22
-
-# stages:
-#   - build
-#   - deploy
-
-# cache:
-#   paths:
-#     - node_modules/
-
-# variables:
-#   NODE_ENV: production
-#   APP_ID: d308mi317guky4
-#   BRANCH_NAME: main
-#   ALLOWED_DOMAIN: https://elcomercio.pe
-#   PIANO_API: https://api.piano.io
-#   ELCOMERCIO_AID: Enoqbpnkpu
-#   GESTION_AID: UmAkgzZ4pu
-#   CLUBELCOMERCIO_AID: fiiSp96Gpu
-#   JWT_SECRET: pablitoestuvoaqui
-#   SENTRY_DNS: https://5f89e34be9c14841a3dea359c77c1376@sentry.ec.pe/143
-
-# before_script:
-#   - rm -rf node_modules .next
-#   - apt-get update -y
-#   - apt-get install -y zip
-#   - npm ci
-
-# build:
-#   stage: build
-#   script:
-#     - npm run build
-#     - zip -r build.zip .next package.json next.config.ts
-#   artifacts:
-#     paths:
-#       - build.zip
-
-# deploy:
-#   stage: deploy
-#   image:
-#     name: amazon/aws-cli
-#     entrypoint: ['']
-#   script:
-#     # Actualizamos variables de entorno en Amplify
-#     - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,$JWT_SECRET=JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
-#     # Lanzamos el deployment
-#     - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build.zip?job_token=$CI_JOB_TOKEN"
-#   only:
-#     - main
-
-
-
 image: node:22
 
 stages:
@@ -95,12 +43,14 @@ build:
 # ========================================
 deploy:
   stage: deploy
-  image: node:22
   dependencies:
     - build
   before_script:
-    # Instala AWS CLI en la misma imagen Node 22
-    - npm install -g aws-cli
+    - apt-get update -y && apt-get install -y unzip curl  # para instalar AWS CLI
+    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    - unzip awscliv2.zip
+    - ./aws/install
+    - aws --version
     # Configura credenciales (asegúrate de setearlas como variables CI/CD en GitLab)
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
