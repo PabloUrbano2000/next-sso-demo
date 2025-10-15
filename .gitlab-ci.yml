@@ -27,7 +27,7 @@ build:
   stage: build
   script:
     - npm run build
-    - zip -r build.zip .next package.json next.config.js
+    - zip -r build.zip .next package.json next.config.ts
   artifacts:
     paths:
       - build.zip
