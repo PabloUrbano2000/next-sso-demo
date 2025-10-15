@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.6.10",
     "@sentry/nextjs": "^10.17.0",
     "axios": "^1.12.2",
     "env-var": "^7.5.0",

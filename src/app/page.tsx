@@ -1,103 +1,91 @@
-import Image from "next/image";
+'use client'
+
+import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className='min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black flex flex-col items-center justify-between p-8 sm:p-20'>
+      <main className='flex flex-col items-center text-center gap-10'>
+        <div className='flex flex-col items-center gap-4'>
+          <Image
+            src='/next.svg'
+            alt='Next.js logo'
+            width={180}
+            height={38}
+            priority
+            className='dark:invert'
+          />
+          <h1 className='text-3xl sm:text-4xl font-semibold tracking-tight'>
+            Centralización de Sesiones
+          </h1>
+          <p className='text-gray-600 dark:text-gray-400 max-w-md text-base sm:text-lg leading-relaxed'>
+            Plataforma unificada para la gestión de autenticación entre
+            <span className='font-medium text-gray-800 dark:text-gray-200'>
+              {' '}
+              elcomercio.pe, gestion.pe
+            </span>{' '}
+            y
+            <span className='font-medium text-gray-800 dark:text-gray-200'>
+              {' '}
+              clubelcomercio.pe
+            </span>
+            . Diseñada con <strong>Next.js 15 (SSR)</strong> y desplegada en
+            <strong> AWS Amplify</strong>.
+          </p>
+        </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className='flex flex-col sm:flex-row gap-4 mt-4'>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href='https://nextjs.org/docs'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='px-6 py-3 rounded-full bg-gray-900 text-white dark:bg-gray-100 dark:text-black font-medium hover:opacity-90 transition'
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Leer documentación
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* <a
+            href='/dashboard'
+            className='px-6 py-3 rounded-full border border-gray-300 dark:border-gray-700 font-medium hover:bg-gray-100 dark:hover:bg-gray-900 transition'
           >
-            Read our docs
+            Ir al dashboard
+          </a> */}
+          <a
+            href='https://aws.amazon.com/amplify/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='px-6 py-3 rounded-full border border-transparent bg-blue-600 hover:bg-blue-700 text-white font-medium transition'
+          >
+            Ver en Amplify
           </a>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+
+      <footer className='flex gap-6 text-sm text-gray-500 dark:text-gray-400 mt-16'>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href='https://nextjs.org/learn'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:underline hover:text-gray-700 dark:hover:text-gray-200'
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
           Learn
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* <a
+          href='https://vercel.com/templates'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:underline hover:text-gray-700 dark:hover:text-gray-200'
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
+          Templates
+        </a> */}
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href='https://nextjs.org'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:underline hover:text-gray-700 dark:hover:text-gray-200'
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
+          Next.js →
         </a>
       </footer>
     </div>
-  );
+  )
 }
