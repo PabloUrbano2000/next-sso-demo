@@ -78,6 +78,9 @@ variables:
 build:
   stage: build
   script:
+    - rm -rf node_modules .next
+    - apt-get update -y
+    - apt-get install -y zip
     - npm ci
     - npm run build
     - zip -r build.zip .next package.json next.config.ts
