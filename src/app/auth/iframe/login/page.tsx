@@ -2,7 +2,6 @@
 
 import { useAuth } from '@/context/AuthContext'
 import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
-import { appendQueryParams } from '@/utils/params'
 import { redirect, useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -14,7 +13,7 @@ export default function LoginPage() {
   React.useEffect(() => {
     if (!email || !user) {
       redirect(
-        `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
+        `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
       )
     }
   }, [email, user])
@@ -24,30 +23,28 @@ export default function LoginPage() {
   }
 
   const handleSuccess = (data?: LoginSuccessData) => {
-    const newRedirectUri = appendQueryParams(redirectUri, {
-      token: data?.access_token || '',
-      registration: 'false',
-      gm_sso_redirect: 'true'
-    })
-
-    location.href = newRedirectUri
+    const info = {
+      eventName: 'auth-login-success',
+      accessToken: data?.access_token || '',
+      user: data?.user || {}
+    }
+    window.top?.postMessage(info, '*')
   }
 
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
     router.push(
-      `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
+      `/iframe/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
     )
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-100 px-4'>
-      <LoginView
-        onSuccess={handleSuccess}
-        onFailed={handleFailed}
-        onEditEmail={handleUpdateEmail}
-      ></LoginView>
-    </div>
+    <LoginView
+      isIframe
+      onSuccess={handleSuccess}
+      onFailed={handleFailed}
+      onEditEmail={handleUpdateEmail}
+    ></LoginView>
   )
 }

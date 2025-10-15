@@ -1,13 +1,12 @@
-import { AuthProvider } from '@/context/AuthContext'
+import AuthLayoutClient from '@/modules/auth/layout'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { ReactNode } from 'react'
 
-interface LayoutProps {
-  children: ReactNode
-}
-
-export default async function AuthLayout({ children }: LayoutProps) {
+export default async function AuthLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const hdrs = await headers()
   const clientId = hdrs.get('x-client-id')
   const redirectUri = hdrs.get('x-redirect-uri')
@@ -17,10 +16,8 @@ export default async function AuthLayout({ children }: LayoutProps) {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-100 px-4'>
-      <AuthProvider initialClientId={clientId} initialRedirectUri={redirectUri}>
-        {children}
-      </AuthProvider>
-    </div>
+    <AuthLayoutClient clientId={clientId} redirectUri={redirectUri}>
+      {children}
+    </AuthLayoutClient>
   )
 }

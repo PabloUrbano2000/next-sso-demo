@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧩 SSO El Comercio — Centralización de Sesiones
 
-## Getting Started
+Este proyecto implementa un **Servicio Central de Autenticación (SSO)** para los dominios del grupo **El Comercio** (`elcomercio.pe`, `gestion.pe`, `clubelcomercio.pe`).  
+Su propósito es **unificar las sesiones de usuario** y mantener un inicio de sesión seguro, moderno y consistente entre las distintas aplicaciones del grupo.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Funcionalidad principal
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔑 **Inicio de sesión único (SSO):**  
+  Los usuarios se autentican una sola vez y pueden acceder al resto de dominios sin volver a iniciar sesión.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🧭 **Validación centralizada:**  
+  Todas las solicitudes se canalizan por un **servicio proxy** y **API Gateway**, que verifican las credenciales y tokens mediante **AWS Lambda**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🌐 **Compatibilidad con OAuth:**  
+  El sistema permite autenticación con **Google, Apple y Facebook**, además del login tradicional por formulario.
 
-## Learn More
+- 🧱 **Gestión segura de sesiones:**  
+  Las cookies se generan, asegurando integridad y persistencia de sesión entre dominios.
 
-To learn more about Next.js, take a look at the following resources:
+- 🪶 **Observabilidad y monitoreo:**  
+  Los errores son capturados por **Sentry**, mientras que **Amazon CloudWatch** registra métricas y logs del entorno.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ☁️ Arquitectura AWS
 
-## Deploy on Vercel
+| Componente                     | Descripción                                             |
+| ------------------------------ | ------------------------------------------------------- |
+| **AWS Amplify**                | Despliegue del frontend (Next.js SSR)                   |
+| **AWS Lambda**                 | Funciones de autenticación y validación                 |
+| **Amazon API Gateway**         | Puerta de enlace entre frontend y backend               |
+| **Amazon Route53**             | Resolución DNS y gestión de dominio `sso.elcomercio.pe` |
+| **Amazon CloudFront**          | CDN y distribución de contenido estático                |
+| **Amazon S3**                  | Almacenamiento de código y assets del sitio             |
+| **Amazon Certificate Manager** | Certificados TLS para HTTPS                             |
+| **Amazon CloudWatch**          | Monitoreo y alertas                                     |
+| **Sentry**                     | Captura y trazabilidad de errores en producción         |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔐 Flujo general de autenticación
+
+1. El usuario es redirigido a **`https://sso.elcomercio.pe`**.
+2. Se valida su existencia mediante el endpoint **`/api/auth/check-email`**.
+3. **API Gateway** enruta la solicitud hacia las **Lambdas** encargadas de autenticar contra Piano ID.
+4. Si la validación es correcta, se genera un **access_token** y se guardan **cookies seguras**.
+5. El usuario es redirigido al dominio solicitante, ya autenticado con sesión activa.
+
+---
+
+## 🧰 Tecnologías principales
+
+- [Next.js 15 (SSR)](https://nextjs.org/)
+- [AWS Amplify](https://aws.amazon.com/amplify/)
+- [AWS Lambda](https://aws.amazon.com/lambda/)
+- [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
+- [TypeScript / Node.js](https://www.typescriptlang.org/)
+- [Sentry](https://sentry.io/)
+- [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/)
+
+---
+
+## 🧩 CI/CD e Infraestructura
+
+El despliegue se gestiona mediante **GitLab CI/CD**, que automatiza la construcción, pruebas y publicación del proyecto en **AWS Amplify**.  
+Las variables de entorno y credenciales se administran desde GitLab para mayor seguridad y control.
+
+## 🧭 Arquitectura del sistema
+
+![Arquitectura del SSO](./layers/sso-physical-layer.png)
+
+---
+
+## 📄 Licencia
+
+Proyecto interno de **El Comercio**.  
+Uso restringido y confidencial.
