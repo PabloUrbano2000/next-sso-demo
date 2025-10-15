@@ -1,4 +1,4 @@
-image: node:20-bullseye
+image: node:22
 
 stages:
   - build
@@ -22,6 +22,8 @@ variables:
 
 before_script:
   - rm -rf node_modules .next
+  - apt-get update -y
+  - apt-get install -y zip
   - npm ci
 
 build:
