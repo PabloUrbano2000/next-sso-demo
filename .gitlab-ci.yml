@@ -1,4 +1,4 @@
-image: node:20
+image: node:22
 
 stages:
   - build
@@ -21,6 +21,7 @@ variables:
   SENTRY_DNS: https://5f89e34be9c14841a3dea359c77c1376@sentry.ec.pe/143
 
 before_script:
+  - rm -rf node_modules .next
   - npm ci
 
 build:
