@@ -22,7 +22,7 @@ variables:
   S3_BUCKET: sso-piano-bucket-pablito-pe
 
 before_script:
-  - apt-get update -y && apt-get install -y unzip curl  # para instalar AWS CLI
+  - apt-get update -y && apt-get install -y unzip curl # para instalar AWS CLI
   - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
   - unzip awscliv2.zip
   - ./aws/install
@@ -61,8 +61,10 @@ deploy:
   script:
     # Actualizamos variables de entorno en Amplify
     - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,JWT_SECRET=$JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
-    
+
     # Lanzamos el deployment
     - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "s3://$S3_BUCKET/build.zip"
+    - aws amplify start-job --app-id $APP_ID --branch-name main --job-type RELEASE
+
   only:
     - main
