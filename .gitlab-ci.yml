@@ -12,7 +12,7 @@ variables:
   NODE_ENV: production
   APP_ID: d308mi317guky4
   BRANCH_NAME: main
-  ALLOWED_DOMAIN: https://elcomercio.pe
+  ALLOWED_DOMAINS: https://elcomercio.pe
   PIANO_API: https://api.piano.io
   ELCOMERCIO_AID: Enoqbpnkpu
   GESTION_AID: UmAkgzZ4pu
@@ -42,9 +42,11 @@ build:
     - apt-get update -y
     - apt-get install -y zip
     - npm ci
-    - npm run build
-    - zip -r build.zip .next package.json next.config.ts
-    - aws s3 cp build.zip s3://$S3_BUCKET/build.zip
+
+    - PIANO_API=$PIANO_API ALLOWED_DOMAINS=$ALLOWED_DOMAINS JWT_SECRET=$JWT_SECRET ELCOMERCIO_AID=$ELCOMERCIO_AID GESTION_AID=$GESTION_AID CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN GESTION_API_TOKEN=$GESTION_API_TOKEN CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN SENTRY_DNS=$SENTRY_DNS npm run build
+
+    - zip -r build.zip .next package.json next.config.ts public
+
   artifacts:
     paths:
       - build.zip
@@ -60,11 +62,11 @@ deploy:
     - build
   script:
     # Actualizamos variables de entorno en Amplify
-    - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,JWT_SECRET=$JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
+    # - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,JWT_SECRET=$JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
 
     # Lanzamos el deployment
-    - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "s3://$S3_BUCKET/build.zip"
-    - aws amplify start-job --app-id $APP_ID --branch-name main --job-type RELEASE
+    - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --zip-file fileb://build.zip --query "deploymentId" --output text)
 
+    - aws amplify start-deployment --app-id $APP_ID --branch-name main --deployment-id $DEPLOYMENT_ID
   only:
     - main
