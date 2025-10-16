@@ -43,23 +43,23 @@ build:
     - apt-get install -y zip
     - npm ci
     - touch .env
-    - echo "NODE_ENV=production" >> .env.production
-    - echo "ALLOWED_DOMAINS=$ALLOWED_DOMAINS" >> .env.production
-    - echo "PIANO_API=$PIANO_API" >> .env.production
-    - echo "ELCOMERCIO_AID=$ELCOMERCIO_AID" >> .env.production
-    - echo "GESTION_AID=$GESTION_AID" >> .env.production
-    - echo "CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID" >> .env.production
-    - echo "ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN" >> .env.production
-    - echo "GESTION_API_TOKEN=$GESTION_API_TOKEN" >> .env.production
-    - echo "CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN" >> .env.production
-    - echo "JWT_SECRET=$JWT_SECRET" >> .env.production
-    - echo "SENTRY_DNS=$SENTRY_DNS" >> .env.production
+    - echo "NODE_ENV=production" >> .env
+    - echo "ALLOWED_DOMAINS=$ALLOWED_DOMAINS" >> .env
+    - echo "PIANO_API=$PIANO_API" >> .env
+    - echo "ELCOMERCIO_AID=$ELCOMERCIO_AID" >> .env
+    - echo "GESTION_AID=$GESTION_AID" >> .env
+    - echo "CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID" >> .env
+    - echo "ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN" >> .env
+    - echo "GESTION_API_TOKEN=$GESTION_API_TOKEN" >> .env
+    - echo "CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN" >> .env
+    - echo "JWT_SECRET=$JWT_SECRET" >> .env
+    - echo "SENTRY_DNS=$SENTRY_DNS" >> .env
 
-    - cat .env.production
+    - cat .env
 
     - npm run build
 
-    - zip -r build.zip .next package.json next.config.ts public
+    - zip -r build.zip .next package.json next.config.ts public .env
 
     - aws s3 cp build.zip s3://$S3_BUCKET/build.zip
 
