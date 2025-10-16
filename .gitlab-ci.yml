@@ -47,7 +47,9 @@ build:
 
     - zip -r build.zip .next package.json next.config.ts public
 
-    - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --zip-file fileb://build.zip --query "deploymentId" --output text)
+    - aws s3 cp build.zip s3://$S3_BUCKET/build.zip
+
+    - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --source-url s3://$S3_BUCKET/build.zip --query "deploymentId" --output text)
 
     - aws amplify start-deployment --app-id $APP_ID --branch-name main --deployment-id $DEPLOYMENT_ID
 
