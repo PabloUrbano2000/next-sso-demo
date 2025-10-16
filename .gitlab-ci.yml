@@ -57,9 +57,11 @@ build:
 
     - cat .env
 
+    - npx ts-node next.config.ts > next.config.js
+
     - npm run build
 
-    - zip -r build.zip .next package.json next.config.ts public .env
+    - zip -r build.zip .next package.json next.config.js public .env amplify.yml
 
     - aws s3 cp build.zip s3://$S3_BUCKET/build.zip
 
