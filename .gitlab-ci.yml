@@ -19,6 +19,18 @@ variables:
   CLUBELCOMERCIO_AID: fiiSp96Gpu
   JWT_SECRET: pablitoestuvoaqui
   SENTRY_DNS: https://5f89e34be9c14841a3dea359c77c1376@sentry.ec.pe/143
+  S3_BUCKET: sso-piano-bucket-pablito-pe
+
+before_script:
+  - apt-get update -y && apt-get install -y unzip curl  # para instalar AWS CLI
+  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  - unzip awscliv2.zip
+  - ./aws/install
+  - aws --version
+  # Configura credenciales (asegúrate de setearlas como variables CI/CD en GitLab)
+  - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+  - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+  - aws configure set default.region $AWS_DEFAULT_REGION
 
 # ========================================
 # JOB: BUILD
@@ -32,6 +44,7 @@ build:
     - npm ci
     - npm run build
     - zip -r build.zip .next package.json next.config.ts
+    - aws s3 cp build.zip s3://$S3_BUCKET/build.zip
   artifacts:
     paths:
       - build.zip
@@ -45,21 +58,11 @@ deploy:
   stage: deploy
   dependencies:
     - build
-  before_script:
-    - apt-get update -y && apt-get install -y unzip curl  # para instalar AWS CLI
-    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    - unzip awscliv2.zip
-    - ./aws/install
-    - aws --version
-    # Configura credenciales (asegúrate de setearlas como variables CI/CD en GitLab)
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - aws configure set default.region $AWS_DEFAULT_REGION
   script:
     # Actualizamos variables de entorno en Amplify
     - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,$JWT_SECRET=JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
     
     # Lanzamos el deployment
-    - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build.zip?job_token=$CI_JOB_TOKEN"
+    - aws amplify start-deployment --app-id $APP_ID --branch-name $BRANCH_NAME --source-url "s3://$S3_BUCKET/build.zip"
   only:
     - main
