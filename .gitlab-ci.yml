@@ -2,7 +2,7 @@ image: node:22
 
 stages:
   - build
-  - deploy
+  # - deploy
 
 cache:
   paths:
@@ -47,6 +47,10 @@ build:
 
     - zip -r build.zip .next package.json next.config.ts public
 
+    - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --zip-file fileb://build.zip --query "deploymentId" --output text)
+
+    - aws amplify start-deployment --app-id $APP_ID --branch-name main --deployment-id $DEPLOYMENT_ID
+
   artifacts:
     paths:
       - build.zip
@@ -56,17 +60,17 @@ build:
 # ========================================
 # JOB: DEPLOY
 # ========================================
-deploy:
-  stage: deploy
-  dependencies:
-    - build
-  script:
-    # Actualizamos variables de entorno en Amplify
-    # - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,JWT_SECRET=$JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
+# deploy:
+#   stage: deploy
+#   dependencies:
+#     - build
+#   script:
+#     # Actualizamos variables de entorno en Amplify
+#     # - aws amplify update-app --app-id $APP_ID --environment-variables ALLOWED_DOMAINS=$ALLOWED_DOMAIN,PIANO_API=$PIANO_API,ELCOMERCIO_AID=$ELCOMERCIO_AID,GESTION_AID=$GESTION_AID,CLUBELCOMERCIO_AID=$CLUBELCOMERCIO_AID,ELCOMERCIO_API_TOKEN=$ELCOMERCIO_API_TOKEN,GESTION_API_TOKEN=$GESTION_API_TOKEN,CLUBELCOMERCIO_API_TOKEN=$CLUBELCOMERCIO_API_TOKEN,JWT_SECRET=$JWT_SECRET,SENTRY_DNS=$SENTRY_DNS
 
-    # Lanzamos el deployment
-    - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --zip-file fileb://build.zip --query "deploymentId" --output text)
+#     # Lanzamos el deployment
+#     - DEPLOYMENT_ID=$(aws amplify create-deployment --app-id $APP_ID --branch-name main --zip-file fileb://build.zip --query "deploymentId" --output text)
 
-    - aws amplify start-deployment --app-id $APP_ID --branch-name main --deployment-id $DEPLOYMENT_ID
-  only:
-    - main
+#     - aws amplify start-deployment --app-id $APP_ID --branch-name main --deployment-id $DEPLOYMENT_ID
+#   only:
+#     - main
