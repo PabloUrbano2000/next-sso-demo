@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode, useEffect } from 'react'
+import './iframe.css'
 
 interface LayoutProps {
   children: ReactNode
