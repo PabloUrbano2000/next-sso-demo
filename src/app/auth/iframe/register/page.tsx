@@ -1,30 +1,33 @@
 'use client'
 
 import { useAuth } from '@/context/AuthContext'
-import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
+import {
+  RegisterSuccessData,
+  RegisterView
+} from '@/modules/auth/components/register'
 import { redirect, useRouter } from 'next/navigation'
 import React from 'react'
 
-export default function IframeLoginPage() {
+export default function IframeRegisterPage() {
   const router = useRouter()
 
-  const { clientId, redirectUri, email, user } = useAuth()
+  const { clientId, redirectUri, email } = useAuth()
 
   React.useEffect(() => {
-    if (!email || !user) {
+    if (!email) {
       redirect(
         `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
       )
     }
-  }, [email, user])
+  }, [email])
 
-  if (!email || !user) {
+  if (!email) {
     return <></>
   }
 
-  const handleSuccess = (data?: LoginSuccessData) => {
+  const handleSuccess = (data?: RegisterSuccessData) => {
     const info = {
-      eventName: 'auth-login-success',
+      eventName: 'auth-register-success',
       accessToken: data?.access_token || '',
       user: data?.user || {}
     }
@@ -40,11 +43,11 @@ export default function IframeLoginPage() {
   }
 
   return (
-    <LoginView
+    <RegisterView
       isIframe
       onSuccess={handleSuccess}
       onFailed={handleFailed}
       onEditEmail={handleUpdateEmail}
-    ></LoginView>
+    ></RegisterView>
   )
 }

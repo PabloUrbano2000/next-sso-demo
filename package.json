@@ -7,8 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write",
-    "perro": "npx ampx generate"
+    "format": "biome format --write"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.17.0",

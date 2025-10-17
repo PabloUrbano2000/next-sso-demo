@@ -1,5 +1,4 @@
 import { useAuth } from '@/context/AuthContext'
-import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 interface Props {
@@ -15,8 +14,6 @@ export const CheckEmailView = ({
   onNotExists,
   onFailed = () => {}
 }: Props): React.ReactNode => {
-  const router = useRouter()
-
   const { setEmail, setUser, clientId } = useAuth()
   const [emailInput, setEmailInput] = useState('')
 
@@ -49,6 +46,7 @@ export const CheckEmailView = ({
 
           onExists()
         } else {
+          setEmail(emailInput)
           onNotExists()
         }
       } else {
@@ -103,10 +101,10 @@ export const CheckEmailView = ({
         <div className='flex bg-black w-full h-0.5'></div>
       </div>
 
-      <div className=''>
+      <div className='text-center'>
         <p className='text-center text-gray-900 text-sm'>
           Al crear la cuenta acepto los Términos y Condiciones y Política de
-          Privacidad
+          Privacidad.
         </p>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function CheckEmailPage() {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-100 px-4'>
+    <div className='flex min-h-screen py-8 items-center justify-center bg-gray-100 px-4'>
       <CheckEmailView
         onExists={handleExists}
         onNotExists={handleNotExists}

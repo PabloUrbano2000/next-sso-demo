@@ -4,8 +4,8 @@ import { ExtendedNextRequest } from '@/types/next'
 import { handleApi } from './lib/middlewares/api'
 import { handleAuth } from './lib/middlewares/auth'
 
-export const runtime = 'nodejs' // ✅ Node Lambda, no Edge
-export const dynamic = 'force-dynamic' // ✅ evita SSG/Edge
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export function middleware(req: ExtendedNextRequest) {
   const path = req.nextUrl.pathname
