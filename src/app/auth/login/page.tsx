@@ -2,26 +2,30 @@
 
 import { useAuth } from '@/context/AuthContext'
 import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
-import { appendQueryParams } from '@/utils/params'
+import { appendPianoQueryParams } from '@/utils/params'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
 
-  const { redirectUri, email, user } = useAuth()
+  const { redirectUri, email, user, channel, setToken } = useAuth()
 
   if (!email || !user) {
     return <></>
   }
 
   const handleSuccess = (data?: LoginSuccessData) => {
-    const newRedirectUri = appendQueryParams(redirectUri, {
-      token: data?.access_token || '',
-      registration: 'false',
-      gm_sso_redirect: 'true'
-    })
+    setToken(data?.access_token || '')
 
-    location.href = newRedirectUri
+    if (channel === 'landing') {
+      location.href = appendPianoQueryParams(
+        redirectUri,
+        data?.access_token || '',
+        'false'
+      )
+    } else {
+      router.replace('/auth/login/success')
+    }
   }
 
   const handleFailed = () => {}

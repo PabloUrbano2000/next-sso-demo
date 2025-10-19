@@ -13,3 +13,15 @@ export function appendQueryParams(
     return urlString
   }
 }
+
+export function appendPianoQueryParams(
+  urlString: string,
+  token: string,
+  isRegister: 'true' | 'false'
+) {
+  return appendQueryParams(urlString, {
+    token: token,
+    registration: isRegister,
+    gm_sso_redirect: 'true'
+  })
+}

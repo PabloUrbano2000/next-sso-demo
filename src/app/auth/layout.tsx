@@ -1,16 +1,20 @@
 'use client'
 
-import { AuthProvider } from '@/context/AuthContext'
+import { AuthProvider, Channel, isValidChannel } from '@/context/AuthContext'
 import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useState } from 'react'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
-  const [queryData, setQueryData] = useState({
+  const [queryData, setQueryData] = useState<{
+    clientId: string
+    redirectUri: string
+    channel: Channel
+  }>({
     clientId: '',
     redirectUri: '',
-    channel: ''
+    channel: 'organic'
   })
   const [isReady, setIsReady] = useState(false)
 
@@ -20,7 +24,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     const params = new URLSearchParams(location.search)
     const clientId = params.get('client_id') ?? ''
     const redirectUri = params.get('redirect_uri') ?? ''
-    const channel = params.get('channel') ?? 'organic'
+    const channel = isValidChannel(params.get('channel') || '')
+      ? (params.get('channel') as Channel)
+      : 'organic'
 
     if (!clientId || !redirectUri) {
       router.replace('/error')

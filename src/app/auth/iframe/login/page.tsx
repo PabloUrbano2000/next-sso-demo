@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 export default function IframeLoginPage() {
   const router = useRouter()
 
-  const { clientId, redirectUri, email, user } = useAuth()
+  const { email, user } = useAuth()
 
   if (!email || !user) {
     return <></>

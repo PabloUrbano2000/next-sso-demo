@@ -40,5 +40,5 @@ export default function IframeAuthLayout({ children }: LayoutProps) {
       )
   }, [])
 
-  return <div>{children}</div>
+  return <>{children}</>
 }

@@ -5,26 +5,30 @@ import {
   RegisterSuccessData,
   RegisterView
 } from '@/modules/auth/components/register'
-import { appendQueryParams } from '@/utils/params'
+import { appendPianoQueryParams } from '@/utils/params'
 import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
 
-  const { redirectUri, email } = useAuth()
+  const { redirectUri, email, channel, setToken } = useAuth()
 
   if (!email) {
     return <></>
   }
 
   const handleSuccess = (data?: RegisterSuccessData) => {
-    const newRedirectUri = appendQueryParams(redirectUri, {
-      token: data?.access_token || '',
-      registration: 'true',
-      gm_sso_redirect: 'true'
-    })
+    setToken(data?.access_token || '')
 
-    location.href = newRedirectUri
+    if (channel === 'landing') {
+      location.href = appendPianoQueryParams(
+        redirectUri,
+        data?.access_token || '',
+        'true'
+      )
+    } else {
+      router.replace('/auth/register/success')
+    }
   }
 
   const handleFailed = () => {}
