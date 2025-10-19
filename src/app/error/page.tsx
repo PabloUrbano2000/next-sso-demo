@@ -8,7 +8,7 @@ export default function ErrorPage() {
         </p>
         <p className='text-sm text-gray-500'>
           Faltan parámetros requeridos (<code>client_id</code> o{' '}
-          <code>url_redirect</code>).
+          <code>redirect_uri</code>).
         </p>
       </div>
     </main>
