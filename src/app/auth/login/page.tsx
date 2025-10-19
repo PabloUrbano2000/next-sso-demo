@@ -3,21 +3,12 @@
 import { useAuth } from '@/context/AuthContext'
 import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
 import { appendQueryParams } from '@/utils/params'
-import { redirect, useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
 
-  const { clientId, redirectUri, email, user } = useAuth()
-
-  React.useEffect(() => {
-    if (!email || !user) {
-      redirect(
-        `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-      )
-    }
-  }, [email, user])
+  const { redirectUri, email, user } = useAuth()
 
   if (!email || !user) {
     return <></>
@@ -36,9 +27,7 @@ export default function LoginPage() {
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
-    router.push(
-      `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-    )
+    router.push(`/auth/check-email${location.search}`)
   }
 
   return (

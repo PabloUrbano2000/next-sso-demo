@@ -6,21 +6,12 @@ import {
   RegisterView
 } from '@/modules/auth/components/register'
 import { appendQueryParams } from '@/utils/params'
-import { redirect, useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
 
-  const { clientId, redirectUri, email } = useAuth()
-
-  React.useEffect(() => {
-    if (!email) {
-      redirect(
-        `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-      )
-    }
-  }, [email])
+  const { redirectUri, email } = useAuth()
 
   if (!email) {
     return <></>
@@ -39,9 +30,7 @@ export default function RegisterPage() {
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
-    router.push(
-      `/auth/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-    )
+    router.push(`/auth/check-email${location.search}`)
   }
 
   return (

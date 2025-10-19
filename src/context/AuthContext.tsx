@@ -9,10 +9,9 @@ type UserContextType = {
   user: User | null
   clientId: string
   redirectUri: string
+  channel: string
   setEmail: (email: string) => void
   setUser: (data: User | null) => void
-  setClientId: (id: string) => void
-  setRedirectUri: (uri: string) => void
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -20,16 +19,19 @@ const UserContext = createContext<UserContextType | undefined>(undefined)
 export function AuthProvider({
   children,
   initialClientId,
-  initialRedirectUri
+  initialRedirectUri,
+  initialChannel
 }: {
   children: ReactNode
   initialClientId: string
   initialRedirectUri: string
+  initialChannel: string
 }) {
   const [email, setEmail] = useState('')
   const [user, setUser] = useState<User | null>(null)
-  const [clientId, setClientId] = useState(initialClientId)
-  const [redirectUri, setRedirectUri] = useState(initialRedirectUri)
+  const [clientId] = useState(initialClientId)
+  const [redirectUri] = useState(initialRedirectUri)
+  const [channel] = useState(initialChannel)
 
   return (
     <UserContext.Provider
@@ -38,10 +40,9 @@ export function AuthProvider({
         user,
         clientId,
         redirectUri,
+        channel,
         setEmail,
-        setUser,
-        setClientId,
-        setRedirectUri
+        setUser
       }}
     >
       {children}

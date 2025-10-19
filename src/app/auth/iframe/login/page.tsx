@@ -2,21 +2,12 @@
 
 import { useAuth } from '@/context/AuthContext'
 import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
-import { redirect, useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function IframeLoginPage() {
   const router = useRouter()
 
   const { clientId, redirectUri, email, user } = useAuth()
-
-  React.useEffect(() => {
-    if (!email || !user) {
-      redirect(
-        `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-      )
-    }
-  }, [email, user])
 
   if (!email || !user) {
     return <></>
@@ -34,9 +25,7 @@ export default function IframeLoginPage() {
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
-    router.push(
-      `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-    )
+    router.push(`/auth/iframe/check-email${location.search}`)
   }
 
   return (

@@ -5,21 +5,12 @@ import {
   RegisterSuccessData,
   RegisterView
 } from '@/modules/auth/components/register'
-import { redirect, useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function IframeRegisterPage() {
   const router = useRouter()
 
-  const { clientId, redirectUri, email } = useAuth()
-
-  React.useEffect(() => {
-    if (!email) {
-      redirect(
-        `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-      )
-    }
-  }, [email])
+  const { email } = useAuth()
 
   if (!email) {
     return <></>
@@ -37,9 +28,7 @@ export default function IframeRegisterPage() {
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
-    router.push(
-      `/auth/iframe/check-email?client_id=${clientId}&redirect_uri=${redirectUri}`
-    )
+    router.push(`/auth/iframe/check-email${location.search}`)
   }
 
   return (

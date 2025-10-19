@@ -1,8 +1,11 @@
 'use client'
 
+import { useAuth } from '@/context/AuthContext'
 import { useEffect } from 'react'
 
 export default function LogoutPage() {
+  const { redirectUri } = useAuth()
+
   useEffect(() => {
     const logout = async () => {
       try {
@@ -13,9 +16,7 @@ export default function LogoutPage() {
       } catch (e) {
         console.error('Error en logout:', e)
       } finally {
-        const params = new URLSearchParams(window.location.search)
-        const redirectUri = params.get('redirect_uri')!
-        window.location.href = redirectUri
+        location.href = redirectUri
       }
     }
 
