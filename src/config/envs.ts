@@ -10,8 +10,6 @@ export interface AppEnv {
   ELCOMERCIO_API_TOKEN: string
   GESTION_API_TOKEN: string
   CLUBELCOMERCIO_API_TOKEN: string
-  JWT_SECRET: string
-  SENTRY_DNS: string
 }
 
 export function getEnv(): AppEnv {
@@ -27,7 +25,5 @@ export function getEnv(): AppEnv {
     CLUBELCOMERCIO_API_TOKEN: get('CLUBELCOMERCIO_API_TOKEN')
       .required()
       .asString(),
-    JWT_SECRET: get('JWT_SECRET').required().asString(),
-    SENTRY_DNS: get('SENTRY_DNS').required().asString()
   }
 }

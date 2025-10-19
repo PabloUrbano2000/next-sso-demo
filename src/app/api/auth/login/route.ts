@@ -6,10 +6,9 @@ import { LoginDto } from '@/modules/auth/dtos/login.dto'
 import { login } from '@/modules/piano/services/identity/login.service'
 import { anonUserGet } from '@/modules/piano/services/user/anon-user-get.service'
 import { handleCustomError, handleUnexpectedError } from '@/utils/handle-errors'
-import { logToSentry } from '@/utils/sentry-logger'
 
-export const runtime = 'nodejs';     
-export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   const brand = req.headers.get('x-brand')
@@ -28,8 +27,6 @@ export async function POST(req: NextRequest) {
 
   const { aid, apiToken } = pianoCtx
   const { email, password, stay_logged_in } = body as LoginDto
-
-  let auxError: unknown = null
 
   try {
     const { success: loginSuccess, error: loginError } = await login({
@@ -88,25 +85,6 @@ export async function POST(req: NextRequest) {
     })
   } catch (error) {
     console.log(error)
-    auxError = error
     return handleUnexpectedError(error)
-  } finally {
-    if (auxError) {
-      await logToSentry({
-        userId: 'no-id',
-        email: email,
-        message: `[Auth] Error en login | ${req.method} ${req.nextUrl.pathname}`,
-        tags: {
-          provider: 'piano',
-          route: `${req.method} ${req.nextUrl.pathname}`
-        },
-        level: 'error',
-        extras: {
-          email: email,
-          requestId: req.headers.get('x-request-id') || 'no-id',
-          ...(typeof auxError === 'object' ? (auxError as {}) : {})
-        }
-      })
-    }
   }
 }

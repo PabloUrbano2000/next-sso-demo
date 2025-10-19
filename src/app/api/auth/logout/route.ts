@@ -3,11 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPianoInfo } from '@/lib/piano'
 import { LogoutDto } from '@/modules/auth/dtos/logout.dto'
 import { handleUnexpectedError } from '@/utils/handle-errors'
-import { logToSentry } from '@/utils/sentry-logger'
 import { cookies } from 'next/headers'
 
-export const runtime = 'nodejs' // ✅ Node Lambda, no Edge
-export const dynamic = 'force-dynamic' // ✅ evita SSG/Edge
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   const brand = req.headers.get('x-brand')
@@ -26,8 +25,6 @@ export async function POST(req: NextRequest) {
 
   const { aid, apiToken } = pianoCtx
   const { token } = body as LogoutDto
-
-  let auxError: unknown = null
 
   try {
     // const { success: logoutSuccess, error: logoutError } = await logout({
@@ -56,23 +53,6 @@ export async function POST(req: NextRequest) {
     })
   } catch (error) {
     console.log(error)
-    auxError = error
     return handleUnexpectedError(error)
-  } finally {
-    if (auxError) {
-      await logToSentry({
-        userId: 'no-id',
-        message: `[Auth] Error en logout | ${req.method} ${req.nextUrl.pathname}`,
-        tags: {
-          provider: 'piano',
-          route: `${req.method} ${req.nextUrl.pathname}`
-        },
-        level: 'error',
-        extras: {
-          requestId: req.headers.get('x-request-id') || 'no-id',
-          ...(typeof auxError === 'object' ? (auxError as {}) : {})
-        }
-      })
-    }
   }
 }

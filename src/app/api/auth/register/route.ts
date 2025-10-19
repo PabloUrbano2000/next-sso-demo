@@ -7,7 +7,6 @@ import { RegisterDto } from '@/modules/auth/dtos/register.dto'
 import { register } from '@/modules/piano/services/identity/register.service'
 import { anonUserGet } from '@/modules/piano/services/user/anon-user-get.service'
 import { handleCustomError, handleUnexpectedError } from '@/utils/handle-errors'
-import { logToSentry } from '@/utils/sentry-logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -42,8 +41,6 @@ export async function POST(req: NextRequest) {
     origin_referer,
     origin_user_agent
   } = body as RegisterDto
-
-  let auxError: unknown = null
 
   try {
     const { success: registerSuccess, error: registerError } = await register({
@@ -109,29 +106,11 @@ export async function POST(req: NextRequest) {
       access_token: registerSuccess?.access_token,
       refresh_token: registerSuccess?.refresh_token,
       email_confirmation_required: registerSuccess?.email_confirmation_required,
-      extend_expired_access_enabled: registerSuccess?.extend_expired_access_enabled
+      extend_expired_access_enabled:
+        registerSuccess?.extend_expired_access_enabled
     })
   } catch (error) {
     console.log(error)
-    auxError = error
     return handleUnexpectedError(error)
-  } finally {
-    if (auxError) {
-      await logToSentry({
-        userId: 'no-id',
-        email: email,
-        message: `[Auth] Error en register | ${req.method} ${req.nextUrl.pathname}`,
-        tags: {
-          provider: 'piano',
-          route: `${req.method} ${req.nextUrl.pathname}`
-        },
-        level: 'error',
-        extras: {
-          email: email,
-          requestId: req.headers.get('x-request-id') || 'no-id',
-          ...(typeof auxError === 'object' ? (auxError as {}) : {})
-        }
-      })
-    }
   }
 }
