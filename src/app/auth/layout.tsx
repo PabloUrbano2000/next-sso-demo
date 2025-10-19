@@ -1,13 +1,12 @@
 'use client'
 
 import { AuthProvider } from '@/context/AuthContext'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useState } from 'react'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
-  const params = useSearchParams()
   const [queryData, setQueryData] = useState({
     clientId: '',
     redirectUri: '',
@@ -18,13 +17,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   const isIframePath = pathname.includes('iframe')
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search)
     const clientId = params.get('client_id') ?? ''
     const redirectUri = params.get('redirect_uri') ?? ''
     const channel = params.get('channel') ?? 'organic'
 
     if (!clientId || !redirectUri) {
       router.replace('/error')
+      return
     }
+
     setQueryData({
       clientId: clientId,
       redirectUri: redirectUri,
