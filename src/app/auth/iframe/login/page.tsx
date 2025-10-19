@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 export default function IframeLoginPage() {
   const router = useRouter()
 
-  const { email, user } = useAuth()
+  const { email, user, channel, setToken } = useAuth()
 
   if (!email || !user) {
     return <></>
@@ -20,6 +20,19 @@ export default function IframeLoginPage() {
       user: data?.user || {}
     }
     window.top?.postMessage(info, '*')
+
+    setToken(data?.access_token || '')
+
+    if (channel === 'landing') {
+      window.top?.postMessage(
+        {
+          eventName: 'iframe-close'
+        },
+        '*'
+      )
+    } else {
+      router.replace('/auth/iframe/login/success')
+    }
   }
 
   const handleFailed = () => {}

@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 export default function IframeRegisterPage() {
   const router = useRouter()
 
-  const { email } = useAuth()
+  const { email, channel } = useAuth()
 
   if (!email) {
     return <></>
@@ -23,6 +23,17 @@ export default function IframeRegisterPage() {
       user: data?.user || {}
     }
     window.top?.postMessage(info, '*')
+
+    if (channel === 'landing') {
+      window.top?.postMessage(
+        {
+          eventName: 'iframe-close'
+        },
+        '*'
+      )
+    } else {
+      router.replace('/auth/iframe/register/success')
+    }
   }
 
   const handleFailed = () => {}
