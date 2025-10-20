@@ -43,12 +43,6 @@ export default function Home() {
           >
             Leer documentación
           </a>
-          {/* <a
-            href='/dashboard'
-            className='px-6 py-3 rounded-full border border-gray-300 dark:border-gray-700 font-medium hover:bg-gray-100 dark:hover:bg-gray-900 transition'
-          >
-            Ir al dashboard
-          </a> */}
           <a
             href='https://aws.amazon.com/amplify/'
             target='_blank'

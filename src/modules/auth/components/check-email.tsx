@@ -1,15 +1,14 @@
 import { useAuth } from '@/context/AuthContext'
+import Image from 'next/image'
 import React, { useState } from 'react'
 
 interface Props {
-  isIframe?: boolean
   onExists: () => void
   onNotExists: () => void
   onFailed?: () => void
 }
 
 export const CheckEmailView = ({
-  isIframe = false,
   onExists,
   onNotExists,
   onFailed = () => {}
@@ -62,50 +61,66 @@ export const CheckEmailView = ({
   }
 
   return (
-    <div
-      className={`w-full max-w-md bg-white p-8 ${
-        isIframe ? '' : 'rounded-xl shadow-lg'
-      }`}
-    >
-      <h1 className='text-2xl font-bold text-center mb-6 text-gray-800'>
-        Crea una cuenta o inicia sesión para seguir leyendo
-      </h1>
-      <h4 className='text-sm font-light text-center mb-5 text-gray-800'>
-        Comienza a personalizar tu experiencia con notas y newsletters
-        seleccionados, juegos y mucho más.
-      </h4>
+    <div className='form'>
+      <div>
+        <h1 className='form-title'>
+          Ingresa tu correo para iniciar sesión o crear una cuenta
+        </h1>
+        <h4 className='form-subtitle'>
+          Creando tu cuenta podrás acceder a Gestión, PerúQuiosco, y disfrutar
+          de los beneficios que El Comercio tiene para ti.
+        </h4>
+      </div>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <div className='flex relative w-full'>
           <input
             type='email'
-            placeholder='Email'
+            placeholder='Correo electrónico'
             value={emailInput}
             onChange={(e) => setEmailInput(e.target.value)}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
-        <button
-          type='submit'
-          disabled={loading}
-          className='py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition disabled:opacity-50'
-        >
+        <button type='submit' disabled={loading} className='dark-button'>
           {loading ? 'Verificando...' : 'Continuar'}
         </button>
         {status && <p className='mt-4 text-center text-gray-700'>{status}</p>}
       </form>
-      <div className='flex justify-center items-center mb-2'>
-        <div className='flex bg-black w-full h-0.5'></div>
-        <span className='p-0 px-2 text-black'>O</span>
-        <div className='flex bg-black w-full h-0.5'></div>
+
+      <div className='separator'>
+        <div className='separator-line'></div>
+        <span className='separator-text'>o</span>
+        <div className='separator-line'></div>
       </div>
 
-      <div className='text-center'>
-        <p className='text-center text-gray-900 text-sm'>
-          Al crear la cuenta acepto los Términos y Condiciones y Política de
-          Privacidad.
-        </p>
+      <div className='social-container'>
+        <button className='social-container__button google'>
+          <Image
+            src='/static/icons/google.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Google
+        </button>
+        <button className='social-container__button facebook'>
+          <Image
+            src='/static/icons/facebook.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Facebook
+        </button>
+      </div>
+
+      <div className='subscriber-container'>
+        <p>Para tener acceso a todo el contenido de El Comercio</p>
+        <a href='https://elcomercio.pe/suscripciones/'>
+          Ver planes de suscripción
+        </a>
       </div>
     </div>
   )

@@ -43,7 +43,6 @@ export default function IframeLoginPage() {
 
   return (
     <LoginView
-      isIframe
       onSuccess={handleSuccess}
       onFailed={handleFailed}
       onEditEmail={handleUpdateEmail}

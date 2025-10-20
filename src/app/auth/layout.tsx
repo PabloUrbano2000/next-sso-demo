@@ -1,6 +1,7 @@
 'use client'
 
 import { AuthProvider, Channel, isValidChannel } from '@/context/AuthContext'
+import { Header } from '@/modules/shared/components/header'
 import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useState } from 'react'
 
@@ -72,7 +73,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-100 px-4'>
+    <div className='flex min-h-screen items-center flex-col bg-white'>
+      <Header />
       <AuthProvider
         initialClientId={queryData.clientId}
         initialRedirectUri={queryData.redirectUri}

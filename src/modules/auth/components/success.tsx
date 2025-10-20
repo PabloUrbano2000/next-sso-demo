@@ -1,25 +1,19 @@
 import React from 'react'
 
 interface Props {
-  isIframe?: boolean
   onRedirectReferer: () => void
   onRedirectSubs: () => void
   type: 'register' | 'login'
 }
 
 export const SuccessView = ({
-  isIframe = false,
   onRedirectReferer,
   onRedirectSubs,
   type
 }: Props): React.ReactNode => {
   return (
-    <div
-      className={`w-full max-w-md bg-white p-8 ${
-        isIframe ? '' : 'rounded-xl shadow-lg'
-      }`}
-    >
-      <h1 className='text-2xl font-bold text-center mb-6 text-gray-800'>
+    <div className='form'>
+      <h1 className='form-title'>
         {type === 'login'
           ? '¡Que bueno verte de nuevo en El Comercio!'
           : '¡Bienvenido a El Comercio!'}

@@ -40,5 +40,5 @@ export default function IframeAuthLayout({ children }: LayoutProps) {
       )
   }, [])
 
-  return <>{children}</>
+  return <div className='py-8 px-4'>{children}</div>
 }

@@ -35,7 +35,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='flex min-h-screen py-8 items-center justify-center bg-gray-100 px-4'>
+    <div className='flex items-center justify-center px-4'>
       <LoginView
         onSuccess={handleSuccess}
         onFailed={handleFailed}

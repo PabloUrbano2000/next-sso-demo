@@ -1,5 +1,6 @@
 import { useAuth } from '@/context/AuthContext'
 import { getDeviceCategory } from '@/utils/navigator'
+import Image from 'next/image'
 import React, { useState } from 'react'
 import { RegisterDto } from '../dtos/register.dto'
 
@@ -12,14 +13,12 @@ export interface RegisterSuccessData {
 }
 
 interface Props {
-  isIframe?: boolean
   onEditEmail: () => void
   onSuccess: (data?: RegisterSuccessData) => void
   onFailed?: () => void
 }
 
 export const RegisterView = ({
-  isIframe = false,
   onEditEmail,
   onSuccess,
   onFailed = () => {}
@@ -89,19 +88,15 @@ export const RegisterView = ({
   }
 
   return (
-    <div
-      className={`w-full max-w-md bg-white p-8 ${
-        isIframe ? '' : 'rounded-xl shadow-lg'
-      }`}
-    >
-      <h1 className='text-2xl font-bold text-center mb-6 text-gray-800'>
-        ¡Te damos la bienvenida!
-      </h1>
+    <div className='form'>
+      <div>
+        <h1 className='form-title'>¡Te damos la bienvenida!</h1>
+        <h4 className='form-subtitle'>
+          Creando tu cuenta podrás acceder a Gestión, PerúQuiosco, y disfrutar
+          de los beneficios que El Comercio tiene para ti.
+        </h4>
+      </div>
 
-      <h4 className='text-sm font-light text-center mb-5 text-gray-800'>
-        Creando tu cuenta podrás acceder a Gestión, PerúQuiosco, y disfrutar de
-        los beneficios que El Comercio tiene para ti.
-      </h4>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <div className='flex relative w-full'>
           <input
@@ -111,7 +106,7 @@ export const RegisterView = ({
             value={email}
             required
             onChange={onChange}
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 disabled w-full'
+            className='input'
           />
           <button
             type='button'
@@ -130,7 +125,7 @@ export const RegisterView = ({
             value={data.password}
             onChange={onChange}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
@@ -142,7 +137,7 @@ export const RegisterView = ({
             value={data.firstName}
             onChange={onChange}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
@@ -154,7 +149,7 @@ export const RegisterView = ({
             value={data.lastName}
             onChange={onChange}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
@@ -165,14 +160,11 @@ export const RegisterView = ({
             placeholder='Teléfono (opcional)'
             value={data.contactPhone}
             onChange={onChange}
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
-        <button
-          type='submit'
-          className='py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition'
-        >
+        <button type='submit' className='dark-button'>
           Continuar
         </button>
 
@@ -227,10 +219,38 @@ export const RegisterView = ({
         {status && <p className='mt-4 text-center text-gray-700'>{status}</p>}
       </form>
 
-      <div className='flex justify-center items-center mb-2'>
-        <div className='flex bg-black w-full h-0.5'></div>
-        <span className='p-0 px-2 text-black'>O</span>
-        <div className='flex bg-black w-full h-0.5'></div>
+      <div className='separator'>
+        <div className='separator-line'></div>
+        <span className='separator-text'>o</span>
+        <div className='separator-line'></div>
+      </div>
+
+      <div className='social-container'>
+        <button className='social-container__button google'>
+          <Image
+            src='/static/icons/google.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Google
+        </button>
+        <button className='social-container__button facebook'>
+          <Image
+            src='/static/icons/facebook.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Facebook
+        </button>
+      </div>
+
+      <div className='subscriber-container'>
+        <p>Para tener acceso a todo el contenido de El Comercio</p>
+        <a href='https://elcomercio.pe/suscripciones/'>
+          Ver planes de suscripción
+        </a>
       </div>
     </div>
   )

@@ -3,7 +3,7 @@
 import { CheckEmailView } from '@/modules/auth/components/check-email'
 import { useRouter } from 'next/navigation'
 
-export default function CheckEmailPage() {
+export default function ResetPasswordPage() {
   const router = useRouter()
 
   const handleExists = () => {

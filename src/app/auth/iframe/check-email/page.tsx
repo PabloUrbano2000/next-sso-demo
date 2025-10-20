@@ -26,7 +26,6 @@ export default function IframeCheckEmailPage() {
 
   return (
     <CheckEmailView
-      isIframe
       onExists={handleExists}
       onNotExists={handleNotExists}
     ></CheckEmailView>

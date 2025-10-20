@@ -44,7 +44,6 @@ export default function IframeRegisterPage() {
 
   return (
     <RegisterView
-      isIframe
       onSuccess={handleSuccess}
       onFailed={handleFailed}
       onEditEmail={handleUpdateEmail}

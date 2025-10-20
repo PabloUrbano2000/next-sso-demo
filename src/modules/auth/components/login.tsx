@@ -1,4 +1,6 @@
 import { useAuth } from '@/context/AuthContext'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 export interface LoginSuccessData {
@@ -22,6 +24,7 @@ export const LoginView = ({
   onEditEmail,
   onFailed = () => {}
 }: Props): React.ReactNode => {
+  const router = useRouter()
   const { user, email, clientId } = useAuth()
 
   const [password, setPassword] = useState('')
@@ -57,20 +60,20 @@ export const LoginView = ({
     `${user?.firstName[0]?.toUpperCase()}` +
     user?.firstName?.substring(1, user?.firstName?.length)
 
-  return (
-    <div
-      className={`w-full max-w-md bg-white p-8 ${
-        isIframe ? '' : 'rounded-xl shadow-lg'
-      }`}
-    >
-      <h1 className='text-2xl font-bold text-center mb-6 text-gray-800'>
-        ¡Bienvenido {firstName}!
-      </h1>
+  const resetLink = `/auth${isIframe ? '/iframe' : ''}/reset-password${
+    location.search
+  }`
 
-      <h4 className='text-sm font-light text-center mb-5 text-gray-800'>
-        Sigue personalizando tu experiencia con notas y newsletters
-        seleccionados, juegos y mucho más.
-      </h4>
+  return (
+    <div className='form'>
+      <div>
+        <h1 className='form-title'>¡Bienvenido {firstName}!</h1>
+        <h4 className='form-subtitle'>
+          Sigue personalizando tu experiencia con notas y newsletters
+          seleccionados, juegos y mucho más.
+        </h4>
+      </div>
+
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <div className='flex relative w-full'>
           <input
@@ -79,7 +82,7 @@ export const LoginView = ({
             placeholder='Email'
             value={email}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 disabled w-full'
+            className='input'
           />
           <button
             type='button'
@@ -97,23 +100,56 @@ export const LoginView = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 w-full'
+            className='input'
           />
         </div>
 
         <button
-          type='submit'
-          className='py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition'
+          type='button'
+          className='flex ml-auto text-black cursor-pointer hover:underline'
+          onClick={() => router.push(resetLink)}
         >
+          Olvidé mi contraseña
+        </button>
+
+        <button type='submit' className='dark-button'>
           Continuar
         </button>
         {status && <p className='mt-4 text-center text-gray-700'>{status}</p>}
       </form>
 
-      <div className='flex justify-center items-center mb-2'>
-        <div className='flex bg-black w-full h-0.5'></div>
-        <span className='p-0 px-2 text-black'>O</span>
-        <div className='flex bg-black w-full h-0.5'></div>
+      <div className='separator'>
+        <div className='separator-line'></div>
+        <span className='separator-text'>o</span>
+        <div className='separator-line'></div>
+      </div>
+
+      <div className='social-container'>
+        <button className='social-container__button google'>
+          <Image
+            src='/static/icons/google.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Google
+        </button>
+        <button className='social-container__button facebook'>
+          <Image
+            src='/static/icons/facebook.svg'
+            width={20}
+            height={20}
+            alt='Google'
+          ></Image>
+          Iniciar con Facebook
+        </button>
+      </div>
+
+      <div className='subscriber-container'>
+        <p>Para tener acceso a todo el contenido de El Comercio</p>
+        <a href='https://elcomercio.pe/suscripciones/'>
+          Ver planes de suscripción
+        </a>
       </div>
     </div>
   )
