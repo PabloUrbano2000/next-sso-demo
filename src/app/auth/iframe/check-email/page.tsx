@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckEmailView } from '@/modules/auth/components/check-email'
+import { CheckEmailView } from '@/modules/auth/components/forms/check-email'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 

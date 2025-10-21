@@ -2,6 +2,8 @@ import { useAuth } from '@/context/AuthContext'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { Button } from '../shared/buttons'
+import { EditButton } from '../shared/edit-button'
 
 export interface LoginSuccessData {
   access_token: string
@@ -29,8 +31,11 @@ export const LoginView = ({
 
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
     setStatus('Cargando...')
 
     try {
@@ -53,6 +58,8 @@ export const LoginView = ({
     } catch (err) {
       setStatus('Error de red')
       onFailed()
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -81,16 +88,10 @@ export const LoginView = ({
             type='email'
             placeholder='Email'
             value={email}
-            required
             className='input'
+            disabled
           />
-          <button
-            type='button'
-            className='button widgetBtn'
-            onClick={onEditEmail}
-          >
-            editar
-          </button>
+          <EditButton onClick={onEditEmail}></EditButton>
         </div>
 
         <div className='flex relative w-full'>
@@ -112,9 +113,10 @@ export const LoginView = ({
           Olvidé mi contraseña
         </button>
 
-        <button type='submit' className='dark-button'>
-          Continuar
-        </button>
+        <Button type='submit' style='dark'>
+          {loading ? 'Verificando...' : 'Continuar'}
+        </Button>
+
         {status && <p className='mt-4 text-center text-gray-700'>{status}</p>}
       </form>
 

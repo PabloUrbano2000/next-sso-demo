@@ -1,6 +1,7 @@
 import { useAuth } from '@/context/AuthContext'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { Button } from '../shared/buttons'
 
 interface Props {
   onExists: () => void
@@ -83,9 +84,10 @@ export const CheckEmailView = ({
           />
         </div>
 
-        <button type='submit' disabled={loading} className='dark-button'>
+        <Button type='submit' style='dark'>
           {loading ? 'Verificando...' : 'Continuar'}
-        </button>
+        </Button>
+
         {status && <p className='mt-4 text-center text-gray-700'>{status}</p>}
       </form>
 

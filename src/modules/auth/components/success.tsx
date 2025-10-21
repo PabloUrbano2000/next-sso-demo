@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import React from 'react'
+import { Button } from './shared/buttons'
 
 interface Props {
   onRedirectReferer: () => void
@@ -13,6 +15,14 @@ export const SuccessView = ({
 }: Props): React.ReactNode => {
   return (
     <div className='form'>
+      <Image
+        src={'/static/logo/elcomercio-square.svg'}
+        width={113}
+        height={108}
+        alt='El Comercio Logo'
+        className='mx-auto my-0'
+        loading='eager'
+      ></Image>
       <h1 className='form-title'>
         {type === 'login'
           ? '¡Que bueno verte de nuevo en El Comercio!'
@@ -20,26 +30,17 @@ export const SuccessView = ({
         <br />
         Tenemos algo para ti
       </h1>
-
-      <h4 className='text-sm font-light text-center mb-5 text-gray-800'>
-        Siendo parte de nuestra comunidad, puedes acceder
+      <h4 className='form-subtitle'>
+        Siendo parte de nuestra comunidad, puedes acceder{' '}
         <strong>ahorrando un 20% en beneficios exclusivos</strong> y descubrir
         todo el contenido que El Comercio tiene para ti.
       </h4>
-      <button
-        type='submit'
-        className='flex w-full py-2 bg-black text-white font-semibold rounded-lg hover:bg-gray-900 transition mb-2 cursor-pointer text-center justify-center'
-        onClick={onRedirectSubs}
-      >
+      <Button style='dark' onClick={onRedirectSubs}>
         Ver planes de suscripción
-      </button>
-      <button
-        type='submit'
-        className='flex w-full py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-300 transition cursor-pointer text-center justify-center'
-        onClick={onRedirectReferer}
-      >
+      </Button>
+      <Button style='light' onClick={onRedirectReferer}>
         Seguir leyendo la nota
-      </button>
+      </Button>
     </div>
   )
 }

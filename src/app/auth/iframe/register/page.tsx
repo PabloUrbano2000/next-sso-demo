@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext'
 import {
   RegisterSuccessData,
   RegisterView
-} from '@/modules/auth/components/register'
+} from '@/modules/auth/components/forms/register'
 import { useRouter } from 'next/navigation'
 
 export default function IframeRegisterPage() {

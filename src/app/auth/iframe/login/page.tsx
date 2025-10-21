@@ -1,7 +1,10 @@
 'use client'
 
 import { useAuth } from '@/context/AuthContext'
-import { LoginSuccessData, LoginView } from '@/modules/auth/components/login'
+import {
+  LoginSuccessData,
+  LoginView
+} from '@/modules/auth/components/forms/login'
 import { useRouter } from 'next/navigation'
 
 export default function IframeLoginPage() {

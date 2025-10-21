@@ -24,7 +24,7 @@ export default function LogoutPage() {
   }, [])
 
   return (
-    <div className='flex h-screen items-center justify-center text-gray-700'>
+    <div className='flex items-center justify-center text-gray-700'>
       Cerrando sesión...
     </div>
   )

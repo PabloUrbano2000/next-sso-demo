@@ -2,7 +2,9 @@ import { useAuth } from '@/context/AuthContext'
 import { getDeviceCategory } from '@/utils/navigator'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { RegisterDto } from '../dtos/register.dto'
+import { RegisterDto } from '../../dtos/register.dto'
+import { Button } from '../shared/buttons'
+import { EditButton } from '../shared/edit-button'
 
 export interface RegisterSuccessData {
   access_token: string
@@ -34,6 +36,7 @@ export const RegisterView = ({
     ageConfirmation: false
   })
   const [status, setStatus] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target
@@ -45,6 +48,7 @@ export const RegisterView = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
     setStatus('Cargando...')
 
     console.log(data)
@@ -84,6 +88,8 @@ export const RegisterView = ({
     } catch (err) {
       setStatus('Error de red')
       onFailed()
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -104,17 +110,10 @@ export const RegisterView = ({
             type='email'
             placeholder='Email'
             value={email}
-            required
-            onChange={onChange}
             className='input'
+            disabled
           />
-          <button
-            type='button'
-            className='button widgetBtn'
-            onClick={onEditEmail}
-          >
-            editar
-          </button>
+          <EditButton onClick={onEditEmail}></EditButton>
         </div>
 
         <div className='flex relative w-full'>
@@ -129,28 +128,30 @@ export const RegisterView = ({
           />
         </div>
 
-        <div className='flex relative w-full'>
-          <input
-            name='firstName'
-            type='text'
-            placeholder='Nombre'
-            value={data.firstName}
-            onChange={onChange}
-            required
-            className='input'
-          />
-        </div>
+        <div className='flex gap-4'>
+          <div className='flex relative w-full'>
+            <input
+              name='firstName'
+              type='text'
+              placeholder='Nombre'
+              value={data.firstName}
+              onChange={onChange}
+              required
+              className='input'
+            />
+          </div>
 
-        <div className='flex relative w-full'>
-          <input
-            name='lastName'
-            type='text'
-            placeholder='Apellido paterno'
-            value={data.lastName}
-            onChange={onChange}
-            required
-            className='input'
-          />
+          <div className='flex relative w-full'>
+            <input
+              name='lastName'
+              type='text'
+              placeholder='Apellido'
+              value={data.lastName}
+              onChange={onChange}
+              required
+              className='input'
+            />
+          </div>
         </div>
 
         <div className='flex relative w-full'>
@@ -164,14 +165,29 @@ export const RegisterView = ({
           />
         </div>
 
-        <button type='submit' className='dark-button'>
-          Continuar
-        </button>
+        <Button type='submit' style='dark'>
+          {loading ? 'Verificando...' : 'Continuar'}
+        </Button>
 
         <div className='text-center'>
           <p className='text-center text-gray-900 text-sm'>
-            Al crear la cuenta acepto los Términos y Condiciones y Política de
-            Privacidad.
+            Al crear la cuenta acepto los{' '}
+            <a
+              className='terms'
+              href='https://elcomercio.pe/terminos-y-condiciones/'
+              target='_blank'
+            >
+              Términos y Condiciones
+            </a>{' '}
+            y{' '}
+            <a
+              className='terms'
+              href='https://elcomercio.pe/politicas-privacidad/'
+              target='_blank'
+            >
+              Política de Privacidad
+            </a>
+            .
           </p>
         </div>
 
