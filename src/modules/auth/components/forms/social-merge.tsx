@@ -72,10 +72,6 @@ export const SocialMergeView = ({
     }
   }
 
-  const firstName =
-    `${user?.firstName[0]?.toUpperCase()}` +
-    user?.firstName?.substring(1, user?.firstName?.length)
-
   const resetLink = `/auth${isIframe ? '/iframe' : ''}/reset-password${
     location.search
   }`
@@ -83,10 +79,10 @@ export const SocialMergeView = ({
   return (
     <div className='form'>
       <div>
-        <h1 className='form-title'>¡Bienvenido {firstName}!</h1>
+        <h1 className='form-title'>¡Bienvenido de vuelta!</h1>
+
         <h4 className='form-subtitle'>
-          Sigue personalizando tu experiencia con notas y newsletters
-          seleccionados, juegos y mucho más.
+          Para poder continuar necesitamos validar tu identidad
         </h4>
       </div>
 
