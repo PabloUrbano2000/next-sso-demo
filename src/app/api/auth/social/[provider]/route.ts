@@ -19,12 +19,12 @@ export async function GET(
   const { aid, apiToken } = pianoCtx
 
   console.log(
-    `${req.nextUrl.origin}/api/auth/social/callback?client_id=${brand}`
+    `${process.env.BASE_URL}/api/auth/social/callback?client_id=${brand}`
   )
 
   try {
     const { success: socialSuccess, error: socialError } = await loginSocial({
-      redirect_uri: `${req.nextUrl.origin}/api/auth/social/callback?client_id=${brand}`,
+      redirect_uri: `${process.env.BASE_URL}/api/auth/social/callback?client_id=${brand}`,
       social_type: provider,
       api_token: apiToken,
       aid: aid
