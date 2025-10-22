@@ -34,7 +34,7 @@ export default function LoginPage() {
   const handleFailed = () => {}
 
   const handleUpdateEmail = () => {
-    router.push(`/auth/check-email${location.search}`)
+    router.push(`/auth/check-email`)
   }
 
   return (

@@ -9,28 +9,18 @@ interface ErrorResponse {
 }
 
 interface SuccessResponse {
-  access_token?: string
-  refresh_token?: string
-  status: string
-  linking_state?: string
-  social_type?: string
-  email: string
-  first_name?: string
-  last_name?: string
-  password_confirmation_available?: boolean
-  linked_social_accounts?: []
-  redirect_uri?: string
-  error_message?: string
-  warn_message?: string
-  additional_input_state?: string
-  need_email?: boolean
-  response_type?: string
+  access_token: string
+  refresh_token: string
+  email_confirmation_required: boolean
+  extend_expired_access_enabled: boolean
 }
 
 interface Props {
   api_token: string
   aid: string
-  response_id: string
+  email?: string
+  password?: string
+  confimed_token?: string
 }
 
 interface ServiceResult<T, E> {
@@ -38,14 +28,14 @@ interface ServiceResult<T, E> {
   error?: E
 }
 
-export const loginSocialCode = async (
+export const loginSocialCodeConfirm = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
   const piano = getPianoAttrs()
 
   console.log(data)
 
-  const endpoint = `${piano.fullApiVersion.v1}/publisher/login/social/code`
+  const endpoint = `${piano.fullApiVersion.v1}/publisher/login/social/codeConfirm`
   try {
     const response = await axios.post<SuccessResponse>(endpoint, null, {
       headers: {
@@ -54,7 +44,9 @@ export const loginSocialCode = async (
       params: {
         aid: data.aid,
         api_token: data.api_token,
-        response_id: data.response_id
+        email: data.email,
+        password: data.password,
+        confimed_token: data.confimed_token
       }
     })
 

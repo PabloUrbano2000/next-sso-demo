@@ -8,8 +8,8 @@ export const Header = () => {
           <Image
             src='/static/logo/elcomercio.svg'
             alt='El Comercio logo'
-            width={218}
-            height={35}
+            width={219}
+            height={36}
             priority
             loading='eager'
           />

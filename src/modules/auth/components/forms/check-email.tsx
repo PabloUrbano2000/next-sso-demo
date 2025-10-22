@@ -1,7 +1,8 @@
-import { useAuth } from '@/context/AuthContext'
-import Image from 'next/image'
 import React, { useState } from 'react'
+
+import { useAuth } from '@/context/AuthContext'
 import { Button } from '../shared/buttons'
+import { ThirdProviders } from '../shared/providers'
 
 interface Props {
   onExists: () => void
@@ -97,26 +98,7 @@ export const CheckEmailView = ({
         <div className='separator-line'></div>
       </div>
 
-      <div className='social-container'>
-        <button className='social-container__button google'>
-          <Image
-            src='/static/icons/google.svg'
-            width={20}
-            height={20}
-            alt='Google'
-          ></Image>
-          Iniciar con Google
-        </button>
-        <button className='social-container__button facebook'>
-          <Image
-            src='/static/icons/facebook.svg'
-            width={20}
-            height={20}
-            alt='Google'
-          ></Image>
-          Iniciar con Facebook
-        </button>
-      </div>
+      <ThirdProviders clientId={clientId} providers={['google', 'facebook']} />
 
       <div className='subscriber-container'>
         <p>Para tener acceso a todo el contenido de El Comercio</p>

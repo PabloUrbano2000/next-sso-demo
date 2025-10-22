@@ -7,7 +7,7 @@ import { appendPianoQueryParams } from '@/utils/params'
 export default function LoginSuccessPage() {
   const { redirectUri, email, token } = useAuth()
 
-  if (!email) {
+  if (!token) {
     return <></>
   }
 

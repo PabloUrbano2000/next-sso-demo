@@ -1,9 +1,8 @@
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { Button } from '../shared/buttons'
+import { useEffect, useState } from 'react'
+import { Button, SocialButton } from '../shared/buttons'
 import { EditButton } from '../shared/edit-button'
-import { ThirdProviders } from '../shared/providers'
 
 export interface LoginSuccessData {
   access_token: string
@@ -20,7 +19,7 @@ interface Props {
   onFailed?: () => void
 }
 
-export const LoginView = ({
+export const SocialMergeView = ({
   isIframe = false,
   onSuccess,
   onEditEmail,
@@ -33,13 +32,23 @@ export const LoginView = ({
   const [status, setStatus] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => {
+    const loginMessage = (event: MessageEvent) => {
+      console.log(event)
+    }
+    window.addEventListener('message', loginMessage)
+    return () => {
+      window.removeEventListener('message', loginMessage)
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setStatus('Cargando...')
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch('/api/auth/merge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-brand': clientId },
         body: JSON.stringify({ email, password })
@@ -126,7 +135,10 @@ export const LoginView = ({
         <div className='separator-line'></div>
       </div>
 
-      <ThirdProviders clientId={clientId} providers={['google', 'facebook']} />
+      <div className='social-container'>
+        <SocialButton clientId={clientId} social='google'></SocialButton>
+        <SocialButton clientId={clientId} social='facebook'></SocialButton>
+      </div>
 
       <div className='subscriber-container'>
         <p>Para tener acceso a todo el contenido de El Comercio</p>

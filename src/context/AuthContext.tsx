@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-type User = { uid: string; firstName: string; lastName: string; email: string }
+type User = { uid?: string; firstName: string; lastName: string; email: string }
 
 export type Channel = 'organic' | 'newsletters' | 'landing' | 'premium'
 
@@ -10,6 +10,7 @@ type UserContextType = {
   email: string
   user: User | null
   token: string
+  // 
   clientId: string
   redirectUri: string
   channel: Channel

@@ -4,33 +4,24 @@ import { getPianoAttrs } from '@/constants/piano'
 
 interface ErrorResponse {
   piano_status: number
-  error_code_list?: { message: string }[]
-  force_show_captcha?: boolean
+  error_code_list: { message: string }[]
+  force_show_captcha: boolean
 }
 
 interface SuccessResponse {
-  access_token?: string
-  refresh_token?: string
-  status: string
-  linking_state?: string
-  social_type?: string
-  email: string
-  first_name?: string
-  last_name?: string
-  password_confirmation_available?: boolean
-  linked_social_accounts?: []
-  redirect_uri?: string
-  error_message?: string
-  warn_message?: string
-  additional_input_state?: string
-  need_email?: boolean
-  response_type?: string
+  access_token: string
+  token_type: string
+  expires_in: number
+  email_confirmation_required: boolean
+  pre_confirmed_user: boolean
+  extend_expired_access_enabled: boolean
+  pub_id: string
 }
 
 interface Props {
   api_token: string
   aid: string
-  response_id: string
+  token: string
 }
 
 interface ServiceResult<T, E> {
@@ -38,14 +29,14 @@ interface ServiceResult<T, E> {
   error?: E
 }
 
-export const loginSocialCode = async (
+export const tokenVerify = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
   const piano = getPianoAttrs()
 
   console.log(data)
 
-  const endpoint = `${piano.fullApiVersion.v1}/publisher/login/social/code`
+  const endpoint = `${piano.fullApiVersion.v1}/publisher/token/verify`
   try {
     const response = await axios.post<SuccessResponse>(endpoint, null, {
       headers: {
@@ -54,7 +45,7 @@ export const loginSocialCode = async (
       params: {
         aid: data.aid,
         api_token: data.api_token,
-        response_id: data.response_id
+        token: data.token
       }
     })
 

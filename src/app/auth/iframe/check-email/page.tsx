@@ -17,11 +17,11 @@ export default function IframeCheckEmailPage() {
   }, [])
 
   const handleExists = () => {
-    router.push('/auth/iframe/login' + location.search)
+    router.push('/auth/iframe/login')
   }
 
   const handleNotExists = () => {
-    router.push('/auth/iframe/register' + location.search)
+    router.push('/auth/iframe/register')
   }
 
   return (

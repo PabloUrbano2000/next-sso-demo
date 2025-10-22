@@ -1,10 +1,10 @@
 import { useAuth } from '@/context/AuthContext'
 import { getDeviceCategory } from '@/utils/navigator'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import { RegisterDto } from '../../dtos/register.dto'
 import { Button } from '../shared/buttons'
 import { EditButton } from '../shared/edit-button'
+import { ThirdProviders } from '../shared/providers'
 
 export interface RegisterSuccessData {
   access_token: string
@@ -241,26 +241,7 @@ export const RegisterView = ({
         <div className='separator-line'></div>
       </div>
 
-      <div className='social-container'>
-        <button className='social-container__button google'>
-          <Image
-            src='/static/icons/google.svg'
-            width={20}
-            height={20}
-            alt='Google'
-          ></Image>
-          Iniciar con Google
-        </button>
-        <button className='social-container__button facebook'>
-          <Image
-            src='/static/icons/facebook.svg'
-            width={20}
-            height={20}
-            alt='Google'
-          ></Image>
-          Iniciar con Facebook
-        </button>
-      </div>
+      <ThirdProviders clientId={clientId} providers={['google', 'facebook']} />
 
       <div className='subscriber-container'>
         <p>Para tener acceso a todo el contenido de El Comercio</p>

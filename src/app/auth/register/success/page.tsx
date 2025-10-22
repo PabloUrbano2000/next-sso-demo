@@ -5,9 +5,9 @@ import { SuccessView } from '@/modules/auth/components/success'
 import { appendPianoQueryParams } from '@/utils/params'
 
 export default function RegisterSuccessPage() {
-  const { redirectUri, email, token } = useAuth()
+  const { redirectUri, token } = useAuth()
 
-  if (!email) {
+  if (!token) {
     return <></>
   }
 

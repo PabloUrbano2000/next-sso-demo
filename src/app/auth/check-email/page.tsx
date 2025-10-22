@@ -7,11 +7,11 @@ export default function CheckEmailPage() {
   const router = useRouter()
 
   const handleExists = () => {
-    router.push('/auth/login' + location.search)
+    router.push('/auth/login')
   }
 
   const handleNotExists = () => {
-    router.push('/auth/register' + location.search)
+    router.push('/auth/register')
   }
 
   return (
