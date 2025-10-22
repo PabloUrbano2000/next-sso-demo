@@ -37,7 +37,10 @@ export function handleApi(req: NextRequest) {
     response.headers.set(key, value)
   })
 
-  const brand = req.headers.get('x-brand') as Brand
+  const brand =
+    (req.headers.get('x-brand') as Brand) ||
+    req.nextUrl.searchParams.get('client_id')
+
   const validBrands = Object.values(BRANDS)
 
   if (typeof brand !== 'string' || !validBrands.includes(brand as Brand)) {

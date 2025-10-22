@@ -1,7 +1,7 @@
 import { useAuth } from '@/context/AuthContext'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '../shared/buttons'
 import { EditButton } from '../shared/edit-button'
 
@@ -32,6 +32,38 @@ export const LoginView = ({
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const loginMessage = (event: MessageEvent) => {
+      console.log(event)
+    }
+
+    window.addEventListener('message', loginMessage)
+
+    return () => {
+      window.removeEventListener('message', loginMessage)
+    }
+  }, [])
+
+  const startLogin = async (provider: string) => {
+    try {
+      console.log(clientId)
+      const res = await fetch(`/api/auth/social/${provider}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'x-brand': clientId }
+      })
+
+      console.log(res)
+
+      const data = await res.json()
+
+      if (data.uri) {
+        window.open(data.uri, 'piano_login', 'width=600,height=700')
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -127,7 +159,10 @@ export const LoginView = ({
       </div>
 
       <div className='social-container'>
-        <button className='social-container__button google'>
+        <button
+          className='social-container__button google'
+          onClick={() => startLogin('google')}
+        >
           <Image
             src='/static/icons/google.svg'
             width={20}
@@ -136,7 +171,10 @@ export const LoginView = ({
           ></Image>
           Iniciar con Google
         </button>
-        <button className='social-container__button facebook'>
+        <button
+          className='social-container__button facebook'
+          onClick={() => startLogin('facebook')}
+        >
           <Image
             src='/static/icons/facebook.svg'
             width={20}
