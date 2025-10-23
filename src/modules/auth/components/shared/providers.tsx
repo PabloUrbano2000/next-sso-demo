@@ -33,6 +33,7 @@ export const ThirdProviders = ({
   const handleRedirect = (data: any) => {
     const { status, user: { email } = {}, access_token } = data
 
+    console.log(data)
     if (status === 'success') {
       setToken(access_token)
       router.push('/auth/login/success')
@@ -43,7 +44,11 @@ export const ThirdProviders = ({
   }
 
   const loginMessage = (event: MessageEvent) => {
+    console.log(event)
+
     if (typeof event.data !== 'object') return
+
+    console.log(event)
     if (event.data && event.data.eventName === 'auth-login-callback') {
       handleRedirect(event.data.payload)
       console.log(event)

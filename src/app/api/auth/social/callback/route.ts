@@ -275,12 +275,12 @@ export async function GET(req: NextRequest) {
             const payload = JSON.parse(decodeURIComponent('${encodeURIComponent(
               JSON.stringify(payload)
             )}'));
-            // if (window.opener) {
-            //   window.opener.postMessage({ eventName: 'auth-login-callback', payload }, '*');
-            //   window.close();
-            // } else {
+            if (window.opener) {
+               window.opener.postMessage({ eventName: 'auth-login-callback', payload }, '*');
+              window.close();
+            } else {
               window.location.href = '${redirectUrl}';
-            // }
+            }
           </script>
         </body>
       </html>
