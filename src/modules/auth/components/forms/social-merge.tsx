@@ -26,7 +26,7 @@ export const SocialMergeView = ({
   onFailed = () => {}
 }: Props): React.ReactNode => {
   const router = useRouter()
-  const { user, email, clientId } = useAuth()
+  const { email, clientId } = useAuth()
 
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState<string | null>(null)
