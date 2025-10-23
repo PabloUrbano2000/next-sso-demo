@@ -33,13 +33,17 @@ export const Button = ({
 interface SocialButton {
   social: 'google' | 'facebook' | 'appleid'
   clientId: string
+  onClick?: () => void
 }
 
 export const SocialButton = ({
   social,
-  clientId
+  clientId,
+  onClick = () => {}
 }: SocialButton): React.ReactNode => {
   const startLogin = () => {
+    onClick()
+
     const width = 600
     const height = 650
 

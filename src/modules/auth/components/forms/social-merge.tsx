@@ -1,8 +1,9 @@
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Button, SocialButton } from '../shared/buttons'
+import { Button } from '../shared/buttons'
 import { EditButton } from '../shared/edit-button'
+import { ThirdProviders } from '../shared/providers'
 
 export interface LoginSuccessData {
   access_token: string
@@ -121,10 +122,7 @@ export const SocialMergeView = ({
         <div className='separator-line'></div>
       </div>
 
-      <div className='social-container'>
-        <SocialButton clientId={clientId} social='google'></SocialButton>
-        <SocialButton clientId={clientId} social='facebook'></SocialButton>
-      </div>
+      <ThirdProviders clientId={clientId} providers={['google', 'facebook']} />
 
       <div className='subscriber-container'>
         <p>Para tener acceso a todo el contenido de El Comercio</p>
