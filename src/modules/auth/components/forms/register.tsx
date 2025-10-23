@@ -175,6 +175,7 @@ export const RegisterView = ({
             <a
               className='terms'
               href='https://elcomercio.pe/terminos-y-condiciones/'
+              rel='noreferrer'
               target='_blank'
             >
               Términos y Condiciones
@@ -183,6 +184,7 @@ export const RegisterView = ({
             <a
               className='terms'
               href='https://elcomercio.pe/politicas-privacidad/'
+              rel='noreferrer'
               target='_blank'
             >
               Política de Privacidad

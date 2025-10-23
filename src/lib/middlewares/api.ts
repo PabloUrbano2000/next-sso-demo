@@ -42,9 +42,7 @@ export function handleApi(req: NextRequest) {
     req.nextUrl.searchParams.get('state')
 
   console.log('hash', decodeURIComponent(req.nextUrl.href))
-
-  console.log(brand)
-
+  
   const validBrands = Object.values(BRANDS)
 
   if (typeof brand !== 'string' || !validBrands.includes(brand as Brand)) {

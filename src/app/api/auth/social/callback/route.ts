@@ -163,7 +163,11 @@ export async function GET(req: NextRequest) {
 
   console.log(clientId)
 
+  console.log('client id', process.env.GOOGLE_CLIENT_ID)
+  console.log('client secr', process.env.GOOGLE_CLIENT_SECRET)
+
   const { aid } = pianoCtx
+
   try {
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -179,7 +183,8 @@ export async function GET(req: NextRequest) {
 
     const tokens = await response.json()
 
-    console.log(tokens)
+    console.log('res google backend:', tokens)
+    console.log('res google backend:', response)
 
     const { success: getStateSuccess, error: getStateError } =
       await loginSocialState({
