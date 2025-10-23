@@ -21,7 +21,7 @@ export const ThirdProviders = ({
       if (typeof event.data !== 'object') return
       if (event.data && event.data.eventName === 'auth-login-callback') {
         const {
-          payload: { status, user: { email } = {}, access_token, message }
+          payload: { status, user: { email } = {}, access_token }
         } = event.data
 
         if (status === 'success') {
@@ -37,7 +37,7 @@ export const ThirdProviders = ({
     return () => {
       window.removeEventListener('message', loginMessage)
     }
-  }, [])
+  }, [router, setEmail, setToken])
 
   return (
     <>

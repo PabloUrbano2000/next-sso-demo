@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { ExtendedNextRequest } from '@/types/next'
+import type { ExtendedNextRequest } from '@/types/next'
 import { handleApi } from './lib/middlewares/api'
 
 export const runtime = 'nodejs'

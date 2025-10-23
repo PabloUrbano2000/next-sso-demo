@@ -1,6 +1,6 @@
 import { getEnv } from '@/config/envs'
-import { Brand, BRANDS } from '@/constants/brands'
-import { NextRequest, NextResponse } from 'next/server'
+import { BRANDS, type Brand } from '@/constants/brands'
+import { type NextRequest, NextResponse } from 'next/server'
 
 const corsOptions = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -39,7 +39,11 @@ export function handleApi(req: NextRequest) {
 
   const brand =
     (req.headers.get('x-brand') as Brand) ||
-    req.nextUrl.searchParams.get('client_id')
+    req.nextUrl.searchParams.get('state')
+
+  console.log('hash', decodeURIComponent(req.nextUrl.href))
+
+  console.log(brand)
 
   const validBrands = Object.values(BRANDS)
 

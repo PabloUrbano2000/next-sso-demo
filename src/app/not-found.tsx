@@ -10,6 +10,7 @@ export default function NotFoundPage() {
       <h1 className='text-6xl font-bold mb-4'>404</h1>
       <p className='text-xl mb-6'>Oops! La página que buscas no existe.</p>
       <button
+        type='button'
         onClick={() => router.push('/')}
         className='px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition'
       >

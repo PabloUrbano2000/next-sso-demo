@@ -1,7 +1,8 @@
 'use client'
 
-import { CheckEmailView } from '@/modules/auth/components/forms/check-email'
 import { useRouter } from 'next/navigation'
+
+import { CheckEmailView } from '@/modules/auth/components/forms/check-email'
 
 export default function CheckEmailPage() {
   const router = useRouter()

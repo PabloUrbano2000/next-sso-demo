@@ -1,9 +1,13 @@
 'use client'
-
-import { AuthProvider, Channel, isValidChannel } from '@/context/AuthContext'
-import { Header } from '@/modules/shared/components/header'
 import { usePathname, useRouter } from 'next/navigation'
-import { ReactNode, useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
+
+import {
+  AuthProvider,
+  type Channel,
+  isValidChannel
+} from '@/context/AuthContext'
+import { Header } from '@/modules/shared/components/header'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
@@ -52,7 +56,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     }
 
     setIsReady(true)
-  }, [])
+  }, [pathname, router])
 
   if (!isReady) {
     return <div className='flex w-full bg-white justify-center'></div>

@@ -2,10 +2,14 @@ import axios, { type AxiosError } from 'axios'
 
 import { getPianoAttrs } from '@/constants/piano'
 
+interface ServiceResult<T, E> {
+  success?: T
+  error?: E
+}
+
 interface ErrorResponse {
   piano_status: number
   error_code_list?: { message: string }[]
-  force_show_captcha?: boolean
 }
 
 interface SuccessResponse {
@@ -28,35 +32,33 @@ interface SuccessResponse {
 }
 
 interface Props {
-  api_token: string
   aid: string
-  response_id: string
+  provider_access_token: string
+  state: string
 }
 
-interface ServiceResult<T, E> {
-  success?: T
-  error?: E
-}
-
-export const loginSocialCode = async (
+export const authSocialState = async (
   data: Props
 ): Promise<ServiceResult<SuccessResponse, ErrorResponse>> => {
   const piano = getPianoAttrs()
 
   console.log(data)
 
-  const endpoint = `${piano.fullApiVersion.v1}/publisher/login/social/code`
+  const endpoint = `${piano.fullApiVersion.v1}/identity/auth/social/state`
   try {
-    const response = await axios.post<SuccessResponse>(endpoint, null, {
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await axios.post<SuccessResponse>(
+      endpoint,
+      {
+        client_id: data.aid,
+        provider_access_token: data.provider_access_token,
+        state: data.state
       },
-      params: {
-        aid: data.aid,
-        api_token: data.api_token,
-        response_id: data.response_id
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    })
+    )
 
     return { success: response.data }
   } catch (err) {
