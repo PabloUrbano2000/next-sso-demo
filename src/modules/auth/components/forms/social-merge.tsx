@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, SocialButton } from '../shared/buttons'
 import { EditButton } from '../shared/edit-button'
 
@@ -31,16 +31,6 @@ export const SocialMergeView = ({
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    const loginMessage = (event: MessageEvent) => {
-      console.log(event)
-    }
-    window.addEventListener('message', loginMessage)
-    return () => {
-      window.removeEventListener('message', loginMessage)
-    }
-  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

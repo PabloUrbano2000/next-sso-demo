@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <explanation> */
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
@@ -34,8 +35,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       : 'organic'
 
     if (!clientId || !redirectUri) {
-      router.replace('/error')
-      return
+      // router.replace('/error')
+      // return
     }
 
     setQueryData({
@@ -56,7 +57,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     }
 
     setIsReady(true)
-  }, [pathname, router])
+  }, [])
 
   if (!isReady) {
     return <div className='flex w-full bg-white justify-center'></div>

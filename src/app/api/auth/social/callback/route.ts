@@ -163,9 +163,6 @@ export async function GET(req: NextRequest) {
 
   console.log(clientId)
 
-  console.log('client id', process.env.GOOGLE_CLIENT_ID)
-  console.log('client secr', process.env.GOOGLE_CLIENT_SECRET)
-
   const { aid } = pianoCtx
 
   try {

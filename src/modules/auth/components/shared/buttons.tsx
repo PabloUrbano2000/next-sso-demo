@@ -75,8 +75,6 @@ export const SocialButton = ({
     social.length
   )}`
 
-  console.log(capitalizeName)
-
   return (
     <button
       type='button'

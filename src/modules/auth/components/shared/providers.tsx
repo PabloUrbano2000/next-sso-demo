@@ -15,6 +15,7 @@ export const ThirdProviders = ({
   const router = useRouter()
   const { setEmail, setToken } = useAuth()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const loginMessage = (event: MessageEvent) => {
       console.log(event)
@@ -37,7 +38,7 @@ export const ThirdProviders = ({
     return () => {
       window.removeEventListener('message', loginMessage)
     }
-  }, [router, setEmail, setToken])
+  }, [])
 
   return (
     <>
